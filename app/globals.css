@@ -26,6 +26,25 @@ html{
   background-color: #0a0a0a;
 }
 
+@keyframes zoomInSuccess {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.success-animation {
+  animation: zoomInSuccess 0.8s ease-out forwards;
+}
+
 @media (min-width: 768px) {  
   body {
     background-position: center;

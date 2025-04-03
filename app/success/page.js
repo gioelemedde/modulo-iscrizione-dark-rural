@@ -4,8 +4,8 @@ import Image from 'next/image';
 
 export default function Success() {
   return (
-    <div className="container mx-auto px-4 py-16 h-screen">
-      <div className="max-w-md mx-auto bg-gray-100/10 shadow-violet-600 backdrop-blur-md rounded-lg shadow-md p-6 text-center">
+    <div className="container mx-auto px-4 py-16 h-screen overflow-hidden ">
+      <div className="max-w-md mx-auto bg-gray-100/10 shadow-violet-600 backdrop-blur-md rounded-lg shadow-md p-6 text-center success-animation">
 
         <h1 className="text-2xl font-bold mb-5 text-violet-600">Invio completato!</h1>
 
