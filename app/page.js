@@ -23,7 +23,7 @@ export default function Home() {
     firma: null,
   });
 
-  const [loading, setLoading] = useState(false); // Stato per il caricamento
+  const [loading, setLoading] = useState(false); 
 
   const nextStep = () => {
     setStep(step + 1);
@@ -45,8 +45,7 @@ export default function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setLoading(true); // Imposta loading a true quando inizia l'invio
-
+    setLoading(true); 
     try {
       const response = await fetch("/api/submit-form", {
         method: "POST",
@@ -101,9 +100,9 @@ export default function Home() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 text-white">
       <div className="max-w-md mx-auto bg-gray-100/10 backdrop-blur-lg rounded-lg shadow-md p-6 shadow-violet-400 min-h-screen">
-        <h1 className="text-2xl font-bold text-center mb-6">
+        <h1 className="text-2xl font-bold text-center mb-6 text-white">
           Iscrizione OBRESCENDI
         </h1>
         <div className="mb-6">

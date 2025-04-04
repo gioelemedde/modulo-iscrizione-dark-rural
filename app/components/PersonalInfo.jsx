@@ -4,11 +4,6 @@ const PersonalInfo = ({ nextStep, handleChange, values }) => {
   const isFormValid = () => {
     const {
       nome,
-      luogoNascita,
-      dataNascita,
-      comune,
-      indirizzo,
-      email,
       consensoDati,
     } = values;
     return (

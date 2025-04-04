@@ -32,7 +32,7 @@ const SignatureCanvas = ({ nextStep, prevStep, handleSignature }) => {
   
   return (
     <div>
-      <h2 className="text-lg font-semibold mb-4">Inserisci la tua firma</h2>
+      <h2 className="text-lg font-semibold mb-4 text-white">Inserisci la tua firma</h2>
       
       <div className="border border-gray-300 rounded mb-4">
         <SignaturePad
