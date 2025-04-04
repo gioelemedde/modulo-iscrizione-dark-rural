@@ -23,7 +23,7 @@ const PersonalInfo = ({ nextStep, handleChange, values }) => {
       nextStep();
     } else {
       alert(
-        "Per favore, compila tutti i campi obbligatori e accetta il consenso al trattamento dei dati personali."
+        "Inserisci il tuo nome e acconsenti al trattamento dei miei dati personali per poter continuare"
       );
     }
   };
