@@ -283,20 +283,18 @@ const PersonalInfo = ({ nextStep, handleChange, values }) => {
 
       {/* reCAPTCHA */}
       <div className="mb-6">
-        <label className="block text-violet-600 text-sm font-bold mb-2">
+        <label className="block text-white text-sm font-bold mb-2">
           Verifica che sei umano
         </label>
         <ReCAPTCHA
           ref={recaptchaRef}
-          sitekey="6LdDHw4rAAAAABjWFhyB2c59vDlP6D1wba84lxu4"
+          sitekey="6LflIg4rAAAAAMqvBbUrPAa1I6Ufwmf2yFIhCkBF"
           onChange={handleCaptchaChange}
           onExpired={handleCaptchaExpired}
           theme="dark" 
           className="mb-4"
         />
       </div>
-
-      <p className="mb-5">* compila tutti i campi per poter firmare</p>
 
       <div className="flex justify-end">
         <button
