@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "cookie": "^1.0.2",
+    "js-cookie": "^3.0.5",
     "next": "15.2.4",
     "nodemailer": "^6.10.0",
     "pdf-lib": "^1.17.1",

@@ -1,3 +1,4 @@
+import CookieBanner from "./cookies";
 import "./globals.css";
 export const metadata = {
   title: "Modulo iscrizione dark rural",
@@ -6,7 +7,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        <CookieBanner />
+      </body>
     </html>
   );
 }
