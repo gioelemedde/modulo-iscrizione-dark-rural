@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useState, useRef } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const PersonalInfo = ({ nextStep, handleChange, values }) => {
+  const [captchaValue, setCaptchaValue] = useState(null);
+  const recaptchaRef = useRef(null);
+
   const isFormValid = () => {
     const {
       nome,
+      luogoNascita,
+      dataNascita,
+      comune,
+      indirizzo,
+      email,
       consensoDati,
     } = values;
     return (
@@ -13,7 +22,8 @@ const PersonalInfo = ({ nextStep, handleChange, values }) => {
       comune &&
       indirizzo &&
       email &&
-      consensoDati
+      consensoDati &&
+      captchaValue // Verifica che il captcha sia stato completato
     );
   };
 
@@ -22,10 +32,24 @@ const PersonalInfo = ({ nextStep, handleChange, values }) => {
     if (isFormValid()) {
       nextStep();
     } else {
-      alert(
-        "Inserisci il tuo nome e acconsenti al trattamento dei miei dati personali per poter continuare"
-      );
+      if (!captchaValue) {
+        alert(
+          "Per continuare è necessario completare il captcha e compilare tutti i campi obbligatori"
+        );
+      } else {
+        alert(
+          "Inserisci il tuo nome e acconsenti al trattamento dei miei dati personali per poter continuare"
+        );
+      }
     }
+  };
+
+  const handleCaptchaChange = (value) => {
+    setCaptchaValue(value);
+  };
+
+  const handleCaptchaExpired = () => {
+    setCaptchaValue(null);
   };
 
   return (
@@ -255,6 +279,21 @@ const PersonalInfo = ({ nextStep, handleChange, values }) => {
             (Regolamento UE 2016/679)
           </label>
         </div>
+      </div>
+
+      {/* reCAPTCHA */}
+      <div className="mb-6">
+        <label className="block text-white text-sm font-bold mb-2">
+          Verifica che sei umano
+        </label>
+        <ReCAPTCHA
+          ref={recaptchaRef}
+          sitekey="6LffCA4rAAAAAD5fsCyFyuxzfZy5hIZL9Vfe5Iys"
+          onChange={handleCaptchaChange}
+          onExpired={handleCaptchaExpired}
+          theme="dark" 
+          className="mb-4"
+        />
       </div>
 
       <p className="mb-5">* compila tutti i campi per poter firmare</p>
