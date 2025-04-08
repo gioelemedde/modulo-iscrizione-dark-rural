@@ -180,7 +180,7 @@ const PersonalInfo = ({ nextStep, handleChange, values }) => {
           className="block text-white text-sm font-bold mb-2"
           htmlFor="email"
         >
-          Email
+          Email *
         </label>
         <input
           type="email"
