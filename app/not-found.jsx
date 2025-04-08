@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image";
+import Link from "next/link";
 
 // app/not-found.tsx
 export default function NotFound() {
@@ -14,7 +15,7 @@ export default function NotFound() {
                   width={400} 
                   height={400} 
         />
-         <p className="mt-4">Hey la pagina che stai cercando non esiste </p>
+         <p className="mt-4">Hey la pagina che stai cercando non esiste, <Link className=" underline text-violet-600" href={'/'}>Torna alla Home</Link> </p>
       </div>
     );
   }
