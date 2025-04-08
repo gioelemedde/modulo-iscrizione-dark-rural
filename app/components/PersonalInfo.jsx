@@ -8,22 +8,14 @@ const PersonalInfo = ({ nextStep, handleChange, values }) => {
   const isFormValid = () => {
     const {
       nome,
-      luogoNascita,
-      dataNascita,
-      comune,
-      indirizzo,
       email,
       consensoDati,
     } = values;
     return (
       nome &&
-      luogoNascita &&
-      dataNascita &&
-      comune &&
-      indirizzo &&
       email &&
       consensoDati &&
-      captchaValue // Verifica che il captcha sia stato completato
+      captchaValue
     );
   };
 
@@ -59,7 +51,7 @@ const PersonalInfo = ({ nextStep, handleChange, values }) => {
           className="block text-white text-sm font-bold mb-2"
           htmlFor="nome"
         >
-          Nome
+          Nome *
         </label>
         <input
           type="text"
