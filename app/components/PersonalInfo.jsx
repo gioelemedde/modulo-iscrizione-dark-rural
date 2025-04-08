@@ -5,18 +5,14 @@ const PersonalInfo = ({ nextStep, handleChange, values }) => {
   const [captchaValue, setCaptchaValue] = useState(null);
   const recaptchaRef = useRef(null);
 
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const isFormValid = () => {
-    const {
-      nome,
-      email,
-      consensoDati,
-    } = values;
-    return (
-      nome &&
-      email &&
-      consensoDati &&
-      captchaValue
-    );
+    const { nome, email, consensoDati } = values;
+    return nome && email && isValidEmail(email) && consensoDati && captchaValue;
   };
 
   const continua = (e) => {
@@ -192,6 +188,11 @@ const PersonalInfo = ({ nextStep, handleChange, values }) => {
           placeholder="Inserisci la tua email"
           required
         />
+        {values.email && !isValidEmail(values.email) && (
+          <p className="text-red-500 text-xs italic mt-1">
+            Inserisci un'email valida.
+          </p>
+        )}
       </div>
 
       <div className="mb-6">
@@ -283,7 +284,7 @@ const PersonalInfo = ({ nextStep, handleChange, values }) => {
           sitekey="6LflIg4rAAAAAMqvBbUrPAa1I6Ufwmf2yFIhCkBF"
           onChange={handleCaptchaChange}
           onExpired={handleCaptchaExpired}
-          theme="dark" 
+          theme="dark"
           className="mb-4"
         />
       </div>

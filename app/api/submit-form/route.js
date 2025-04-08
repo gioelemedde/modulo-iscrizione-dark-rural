@@ -10,9 +10,9 @@ export async function POST(req) {
     const { width, height } = page.getSize();
 
     const now = new Date();
-    const dateStr = now.toISOString().split("T")[0].replace(/-/g, "");
-    const randomNum = Math.floor(1000 + Math.random() * 9000);
-    const matricola = `MAT-${dateStr}-${randomNum}`;
+    const dateStr = now.toISOString().slice(2, 10).replace(/-/g, ""); 
+    const randomStr = Math.random().toString(36).substring(2, 6).toUpperCase(); 
+    const matricola = `${dateStr}-${randomStr}`;
 
     const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
     const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
@@ -177,6 +177,27 @@ export async function POST(req) {
         },
       ],
     });
+
+    // Invio anche all'utente che ha inserito la propria email
+    if (formData.email) {
+      await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: formData.email,
+        subject: `Copia del tuo modulo di adesione OBRESCENDI - ${matricola}`,
+        text: `Gentile ${
+          formData.nome || "utente"
+        },\n\nin allegato trovi la copia del modulo di adesione che hai appena compilato per l'associazione OBRESCENDI.\n\nGrazie per la tua richiesta!\n\nCordiali saluti,\nAssociazione OBRESCENDI`,
+        attachments: [
+          {
+            filename: `modulo_adesione_${(formData.nome || "utente").replace(
+              /\s+/g,
+              "_"
+            )}.pdf`,
+            content: Buffer.from(pdfBytes),
+          },
+        ],
+      });
+    }
 
     return new Response(
       JSON.stringify({ message: "Modulo di adesione inviato con successo!" }),

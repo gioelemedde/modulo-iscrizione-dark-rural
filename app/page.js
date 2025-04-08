@@ -44,8 +44,8 @@ export default function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    setLoading(true); 
+    setLoading(true);
+  
     try {
       const response = await fetch("/api/submit-form", {
         method: "POST",
@@ -54,18 +54,20 @@ export default function Home() {
         },
         body: JSON.stringify(formData),
       });
-
+  
       if (response.ok) {
         router.push("/success");
       } else {
-        console.error("Errore nell'invio del form");
+        router.push("/error"); // ⬅️ aggiunto
       }
     } catch (error) {
       console.error("Errore:", error);
+      router.push("/error"); // ⬅️ aggiunto
     } finally {
       setLoading(false);
     }
   };
+  
 
   const renderStep = () => {
     switch (step) {
