@@ -283,12 +283,12 @@ const PersonalInfo = ({ nextStep, handleChange, values }) => {
 
       {/* reCAPTCHA */}
       <div className="mb-6">
-        <label className="block text-white text-sm font-bold mb-2">
+        <label className="block text-violet-600 text-sm font-bold mb-2">
           Verifica che sei umano
         </label>
         <ReCAPTCHA
           ref={recaptchaRef}
-          sitekey="6LffCA4rAAAAAD5fsCyFyuxzfZy5hIZL9Vfe5Iys"
+          sitekey="6LdDHw4rAAAAABjWFhyB2c59vDlP6D1wba84lxu4"
           onChange={handleCaptchaChange}
           onExpired={handleCaptchaExpired}
           theme="dark" 
