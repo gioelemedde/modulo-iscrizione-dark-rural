@@ -12,8 +12,8 @@ const PersonalInfo = ({ nextStep, handleChange, values }) => {
   };
 
   const isFormValid = () => {
-    const { nome, email, consensoDati } = values;
-    return nome && email && isValidEmail(email) && consensoDati && captchaValue;
+    const { nome, email, consensoDati, cognome } = values;
+    return nome && email && cognome && isValidEmail(email) && consensoDati && captchaValue;
   };
 
   const continua = (e) => {

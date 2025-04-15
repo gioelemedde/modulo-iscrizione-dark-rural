@@ -163,7 +163,7 @@ export async function POST(req) {
       to: "darkrural.fest@gmail.com",
       subject: `Modulo di adesione OBRESCENDI - ${
         formData.nome  || "Nuovo utente"
-      } - ${formData.cognome} -${matricola}`,
+      } - ${formData.cognome || "Cognome non specificato"} -${matricola}`,
       text: `Modulo di adesione compilato da ${
         formData.nome || "un nuovo utente"
       }.`,
