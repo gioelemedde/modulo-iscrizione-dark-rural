@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React, { useState, useRef } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 
@@ -42,6 +43,7 @@ const PersonalInfo = ({ nextStep, handleChange, values }) => {
 
   return (
     <form>
+      <p className="mb-5">Prima di compilare i campi ti consigliamo di visonare il documento <Link className="text-violet-500" href={'/docAdesione'}>cliccando qui</Link>  </p>
       <div className="mb-4">
         <label
           className="block text-white text-sm font-bold mb-2"

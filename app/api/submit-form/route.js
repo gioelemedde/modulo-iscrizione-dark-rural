@@ -162,8 +162,8 @@ export async function POST(req) {
       from: process.env.EMAIL_USER,
       to: "darkrural.fest@gmail.com",
       subject: `Modulo di adesione OBRESCENDI - ${
-        formData.nome || "Nuovo utente"
-      } - ${matricola}`,
+        formData.nome  || "Nuovo utente"
+      } - ${formData.cognome} -${matricola}`,
       text: `Modulo di adesione compilato da ${
         formData.nome || "un nuovo utente"
       }.`,
