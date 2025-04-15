@@ -67,7 +67,7 @@ const PersonalInfo = ({ nextStep, handleChange, values }) => {
           className="block text-white text-sm font-bold mb-2"
           htmlFor="nome"
         >
-          Cognome
+          Cognome *
         </label>
         <input
           type="text"
