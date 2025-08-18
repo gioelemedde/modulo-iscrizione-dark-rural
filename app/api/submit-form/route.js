@@ -6,6 +6,19 @@ import { JWT } from "google-auth-library";
 // Funzione per salvare i dati su Google Sheets
 async function saveToGoogleSheets(formData, matricola) {
   try {
+    // Verifica che le variabili d'ambiente siano configurate
+    if (!process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL) {
+      throw new Error("GOOGLE_SERVICE_ACCOUNT_EMAIL non configurata");
+    }
+    if (!process.env.GOOGLE_PRIVATE_KEY) {
+      throw new Error("GOOGLE_PRIVATE_KEY non configurata");
+    }
+    if (!process.env.GOOGLE_SHEET_ID) {
+      throw new Error("GOOGLE_SHEET_ID non configurata");
+    }
+
+    console.log("Tentativo di autenticazione con:", process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL);
+
     // Configurazione JWT per l'autenticazione
     const serviceAccountAuth = new JWT({
       email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
@@ -13,12 +26,28 @@ async function saveToGoogleSheets(formData, matricola) {
       scopes: ["https://www.googleapis.com/auth/spreadsheets"],
     });
 
+    // Test dell'autenticazione prima di procedere
+    try {
+      await serviceAccountAuth.authorize();
+      console.log("Autenticazione JWT riuscita");
+    } catch (authError) {
+      console.error("Errore di autenticazione JWT:", authError);
+      throw new Error(`Autenticazione fallita: ${authError.message}`);
+    }
+
     // Connessione al Google Sheet
     const doc = new GoogleSpreadsheet(
       process.env.GOOGLE_SHEET_ID,
       serviceAccountAuth
     );
-    await doc.loadInfo();
+    
+    try {
+      await doc.loadInfo();
+      console.log(`Connesso al documento: ${doc.title}`);
+    } catch (loadError) {
+      console.error("Errore nel caricamento del documento:", loadError);
+      throw new Error(`Impossibile accedere al foglio di calcolo: ${loadError.message}`);
+    }
 
     // Cerca il foglio "Iscritti" o crealo se non esiste
     let sheet = doc.sheetsByTitle["Iscritti"];
@@ -44,6 +73,7 @@ async function saveToGoogleSheets(formData, matricola) {
 
     // Se il foglio non esiste, crealo
     if (!sheet) {
+      console.log("Creazione nuovo foglio 'Iscritti'");
       sheet = await doc.addSheet({
         title: "Iscritti",
         headerValues: requiredHeaders,
@@ -58,6 +88,7 @@ async function saveToGoogleSheets(formData, matricola) {
         !sheet.headerValues ||
         sheet.headerValues.length === 0
       ) {
+        console.log("Aggiunta intestazioni al foglio esistente");
         await sheet.setHeaderRow(requiredHeaders);
       } else {
         // Controlla se mancano delle colonne e aggiungile se necessario
@@ -122,7 +153,7 @@ function formatDate(dateString) {
   }
 }
 
-// Versione aggiornata della tua funzione POST con integrazione Google Sheets
+// Versione aggiornata della funzione POST con migliore gestione degli errori
 export async function POST(req) {
   try {
     const formData = await req.json();
@@ -272,15 +303,23 @@ export async function POST(req) {
 
     const pdfBytes = await pdfDoc.save();
 
-    // SALVA I DATI SU GOOGLE SHEETS
+    // SALVA I DATI SU GOOGLE SHEETS CON GESTIONE ERRORI MIGLIORATA
+    let sheetsSuccess = false;
     try {
       await saveToGoogleSheets(formData, matricola);
+      sheetsSuccess = true;
+      console.log("Salvataggio su Google Sheets completato con successo");
     } catch (sheetsError) {
       console.error("Errore nel salvataggio su Google Sheets:", sheetsError);
+      console.error("Dettagli errore:", {
+        message: sheetsError.message,
+        stack: sheetsError.stack,
+        cause: sheetsError.cause
+      });
       // Continua comunque con l'invio email anche se Google Sheets fallisce
     }
 
-    const transporter = nodemailer.createTransport({
+    const transporter = nodemailer.createTransporter({
       service: "gmail",
       auth: {
         user: process.env.EMAIL_USER,
@@ -288,15 +327,24 @@ export async function POST(req) {
       },
     });
 
+    // Email all'organizzazione
+    const emailSubject = `Modulo di adesione OBRESCENDI - ${
+      formData.nome || "Nuovo utente"
+    } - ${formData.cognome || "Cognome non specificato"} - ${matricola}${
+      sheetsSuccess ? "" : " [ATTENZIONE: Non salvato su Google Sheets]"
+    }`;
+
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: "darkrural.fest@gmail.com",
-      subject: `Modulo di adesione OBRESCENDI - ${
-        formData.nome || "Nuovo utente"
-      } - ${formData.cognome || "Cognome non specificato"} - ${matricola}`,
+      subject: emailSubject,
       text: `Modulo di adesione compilato da ${
         formData.nome || "un nuovo utente"
-      }.`,
+      }.${
+        sheetsSuccess 
+          ? "\n\nI dati sono stati salvati correttamente su Google Sheets." 
+          : "\n\nATTENZIONE: I dati NON sono stati salvati su Google Sheets a causa di un errore di configurazione. Verificare le credenziali Google."
+      }`,
       attachments: [
         {
           filename: `modulo_adesione_${(formData.nome || "utente").replace(
@@ -336,15 +384,21 @@ Associazione OBRESCENDI`,
 
     return new Response(
       JSON.stringify({
-        message: "Modulo di adesione inviato con successo!",
+        message: sheetsSuccess 
+          ? "Modulo di adesione inviato con successo!" 
+          : "Modulo di adesione inviato con successo! (Nota: errore nel salvataggio su Google Sheets)",
         matricola: matricola,
+        sheetsSuccess: sheetsSuccess
       }),
       { status: 200 }
     );
   } catch (error) {
     console.error("Errore:", error);
     return new Response(
-      JSON.stringify({ message: "Errore durante l'invio del modulo" }),
+      JSON.stringify({ 
+        message: "Errore durante l'invio del modulo",
+        error: error.message 
+      }),
       { status: 500 }
     );
   }
