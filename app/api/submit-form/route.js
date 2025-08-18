@@ -6,48 +6,19 @@ import { JWT } from "google-auth-library";
 // Funzione per salvare i dati su Google Sheets
 async function saveToGoogleSheets(formData, matricola) {
   try {
-    // Verifica che le variabili d'ambiente siano configurate
-    if (!process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL) {
-      throw new Error("GOOGLE_SERVICE_ACCOUNT_EMAIL non configurata");
-    }
-    if (!process.env.GOOGLE_PRIVATE_KEY) {
-      throw new Error("GOOGLE_PRIVATE_KEY non configurata");
-    }
-    if (!process.env.GOOGLE_SHEET_ID) {
-      throw new Error("GOOGLE_SHEET_ID non configurata");
-    }
-
-    console.log("Tentativo di autenticazione con:", process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL);
-
     // Configurazione JWT per l'autenticazione
     const serviceAccountAuth = new JWT({
-      email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-      key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+      email: "dr-iscrizione-form@dark-rural-1744103066544.iam.gserviceaccount.com",
+      key:"-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDJyDPyJYb2vf7d\nUD1QLyx8Ba9iLlUPsIhJ5niCyfauKkLkr9VXMtH9LXN3gxHGn1rHiTti3bim+iiR\ngCK5b5fHiD4aff1aA4sp2mJHC29K4SgPhxYBV0IGFn8y7DAXzUiw65xrPUpwyVg2\nirGem9dOrS777ZeITusiR7GYvHefqvRVHCRA1rCPdLg+Ykq8YJmgs8tbhpsyB0gg\nNxOWOI/l0th3QZQXzmubFEz/RSqvQogAwBqHNHJFaUDcjuKeAB/uBFNXXCf/Yxl4\nu0IsPt6mAZSSUK/SG+Yg8P2jggEb2O1kRQr04iRReqywK3wcd0/cLiLNKbZ7Dg6z\nqF7rchHHAgMBAAECggEATGkhbq2SVcauCD3V8hLjHBYFC79y262kdqOteA2l+d8s\nFLCXL92hUmgPRS8foKEAvfX0RKSkw6qQiUTGIYWmKtundN3H/nnADbnSpIeqfecU\nhgjIJvrVmDuVsIFrVuAYilK2mY+MrHg6jPDpgSAPoQ4I8ELRMr974C/ZC3c3L4Ff\npRFU17A2WEZC7ih1+VtIID5sAx7qaT8Jl+Z876QJKM0WA/Yu1oZhwh69PLlfIV3r\nRtqgJYgVvXy9HTEtRkXAYjk2+JkxZJZqwymJxiv95j6ahxeO/PlGYzwVG1nHh7M8\n83e7+WaOubFa2BvanvCcBqXp2vzGwv/ZQjx5VfyTQQKBgQDrlij5ae3LrhUFzA7H\nEa1QEe0/disbLRm9cYt8NJYGE2m7Xtjslqdbhp5/xA4nEPoyCz5Fv4FiQmzJ6ENE\nfWmSAW6RDJhHaTwZVkyiCzwn2/I3h6dlKJG8b7FwOeYc2Rz6uIPv+nmpCUnl7mbD\nlkY1AXmBYRFDNyjNjfpcU/yhQQKBgQDbRC675fGYPOE4EmPPprSnf7hLEahAMQ/8\ndfISg4lUb88rhAFzqFvZM9bewePuWH5u0jwoDctx8xXaz/D2RaaVL7dJbfmITNVI\nxNVItwSkalGJ2BmWnmA2Qu/NICztD1Hnss7d2SlduI3lu/AxOHK7MAOFnk3LE5fN\n9eLz4eZpBwKBgQDNGKI9WOIj4z78GAV5e0M2JRU1nYuzkhUJn3M+w40kZvwymkUh\n25qBjPYp5yYnDpmyvaUOFcXvJEMPmDwPwVsKOGLotl1QNiaTLFV08XEChnIds+Sg\npawSr+569H0H+mBHSiHa52XJKoQCQAWJGyet98WvRDFCIiBMq+EdRiT2wQKBgQC+\nVg+jeFYiayauf/g4t2O2yv313FwLbQuNge0i+R/rNivGgI6qEYm5oHBzaigsLJGE\nLeeedWsXfYaJLVzky01xz7vxeA/Wq6uxwXvL5WOYPdqOKBL+Vnj6YVy82aNmHZhh\n4ywEFJD+FEjJFj3I3FFsAJ/uC59IG7f5R+s8/en/XQKBgQCmLcUWlrBJtWB5TocB\nbvgvBoGKXjZFdm+pzAL3C3n2RonC3iBO9Gk9KIDiHGWFgUs4pML4Jx2iA0+jK1pK\nFa29/UjcPhWv+As6f11osH3o2+OZQdrYLBM3tutlvFB4pPTtGIrADtMAUFUQMy5k\nzDNW9MODpyjuGEM3+2unF4ZLog==\n-----END PRIVATE KEY-----\n",
       scopes: ["https://www.googleapis.com/auth/spreadsheets"],
     });
 
-    // Test dell'autenticazione prima di procedere
-    try {
-      await serviceAccountAuth.authorize();
-      console.log("Autenticazione JWT riuscita");
-    } catch (authError) {
-      console.error("Errore di autenticazione JWT:", authError);
-      throw new Error(`Autenticazione fallita: ${authError.message}`);
-    }
-
     // Connessione al Google Sheet
     const doc = new GoogleSpreadsheet(
-      process.env.GOOGLE_SHEET_ID,
+      "1lffxEufNHZu6bH1b-Pw5ZHMU43B_oYMVdRgowjdx20s",
       serviceAccountAuth
     );
-    
-    try {
-      await doc.loadInfo();
-      console.log(`Connesso al documento: ${doc.title}`);
-    } catch (loadError) {
-      console.error("Errore nel caricamento del documento:", loadError);
-      throw new Error(`Impossibile accedere al foglio di calcolo: ${loadError.message}`);
-    }
+    await doc.loadInfo();
 
     // Cerca il foglio "Iscritti" o crealo se non esiste
     let sheet = doc.sheetsByTitle["Iscritti"];
@@ -73,7 +44,6 @@ async function saveToGoogleSheets(formData, matricola) {
 
     // Se il foglio non esiste, crealo
     if (!sheet) {
-      console.log("Creazione nuovo foglio 'Iscritti'");
       sheet = await doc.addSheet({
         title: "Iscritti",
         headerValues: requiredHeaders,
@@ -88,7 +58,6 @@ async function saveToGoogleSheets(formData, matricola) {
         !sheet.headerValues ||
         sheet.headerValues.length === 0
       ) {
-        console.log("Aggiunta intestazioni al foglio esistente");
         await sheet.setHeaderRow(requiredHeaders);
       } else {
         // Controlla se mancano delle colonne e aggiungile se necessario
@@ -153,7 +122,7 @@ function formatDate(dateString) {
   }
 }
 
-// Versione aggiornata della funzione POST con migliore gestione degli errori
+// Versione aggiornata della tua funzione POST con integrazione Google Sheets
 export async function POST(req) {
   try {
     const formData = await req.json();
@@ -303,23 +272,15 @@ export async function POST(req) {
 
     const pdfBytes = await pdfDoc.save();
 
-    // SALVA I DATI SU GOOGLE SHEETS CON GESTIONE ERRORI MIGLIORATA
-    let sheetsSuccess = false;
+    // SALVA I DATI SU GOOGLE SHEETS
     try {
       await saveToGoogleSheets(formData, matricola);
-      sheetsSuccess = true;
-      console.log("Salvataggio su Google Sheets completato con successo");
     } catch (sheetsError) {
       console.error("Errore nel salvataggio su Google Sheets:", sheetsError);
-      console.error("Dettagli errore:", {
-        message: sheetsError.message,
-        stack: sheetsError.stack,
-        cause: sheetsError.cause
-      });
       // Continua comunque con l'invio email anche se Google Sheets fallisce
     }
 
-    const transporter = nodemailer.createTransporter({
+    const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
         user: process.env.EMAIL_USER,
@@ -327,24 +288,15 @@ export async function POST(req) {
       },
     });
 
-    // Email all'organizzazione
-    const emailSubject = `Modulo di adesione OBRESCENDI - ${
-      formData.nome || "Nuovo utente"
-    } - ${formData.cognome || "Cognome non specificato"} - ${matricola}${
-      sheetsSuccess ? "" : " [ATTENZIONE: Non salvato su Google Sheets]"
-    }`;
-
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: "darkrural.fest@gmail.com",
-      subject: emailSubject,
+      subject: `Modulo di adesione OBRESCENDI - ${
+        formData.nome || "Nuovo utente"
+      } - ${formData.cognome || "Cognome non specificato"} - ${matricola}`,
       text: `Modulo di adesione compilato da ${
         formData.nome || "un nuovo utente"
-      }.${
-        sheetsSuccess 
-          ? "\n\nI dati sono stati salvati correttamente su Google Sheets." 
-          : "\n\nATTENZIONE: I dati NON sono stati salvati su Google Sheets a causa di un errore di configurazione. Verificare le credenziali Google."
-      }`,
+      }.`,
       attachments: [
         {
           filename: `modulo_adesione_${(formData.nome || "utente").replace(
@@ -384,21 +336,15 @@ Associazione OBRESCENDI`,
 
     return new Response(
       JSON.stringify({
-        message: sheetsSuccess 
-          ? "Modulo di adesione inviato con successo!" 
-          : "Modulo di adesione inviato con successo! (Nota: errore nel salvataggio su Google Sheets)",
+        message: "Modulo di adesione inviato con successo!",
         matricola: matricola,
-        sheetsSuccess: sheetsSuccess
       }),
       { status: 200 }
     );
   } catch (error) {
     console.error("Errore:", error);
     return new Response(
-      JSON.stringify({ 
-        message: "Errore durante l'invio del modulo",
-        error: error.message 
-      }),
+      JSON.stringify({ message: "Errore durante l'invio del modulo" }),
       { status: 500 }
     );
   }
