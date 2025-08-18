@@ -1,7 +1,7 @@
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import nodemailer from "nodemailer";
-import { GoogleSpreadsheet } from "google-spreadsheet";
-import { JWT } from "google-auth-library";
+import { GoogleSpreadsheet } from 'google-spreadsheet';
+import { JWT } from 'google-auth-library';
 
 // Funzione per salvare i dati su Google Sheets
 async function saveToGoogleSheets(formData, matricola) {
@@ -9,95 +9,80 @@ async function saveToGoogleSheets(formData, matricola) {
     // Configurazione JWT per l'autenticazione
     const serviceAccountAuth = new JWT({
       email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-      key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"),
-      scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+      key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
     });
 
     // Connessione al Google Sheet
-    const doc = new GoogleSpreadsheet(
-      process.env.GOOGLE_SHEET_ID,
-      serviceAccountAuth
-    );
+    const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID, serviceAccountAuth);
     await doc.loadInfo();
 
     // Cerca il foglio "Iscritti" o crealo se non esiste
-    let sheet = doc.sheetsByTitle["Iscritti"];
-
+    let sheet = doc.sheetsByTitle['Iscritti'];
+    
     // Definisci le intestazioni necessarie
     const requiredHeaders = [
-      "Matricola",
-      "Data Iscrizione",
-      "Nome",
-      "Cognome",
-      "Genere",
-      "Data di Nascita",
-      "Luogo di Nascita",
-      "Comune di Residenza",
-      "Indirizzo",
-      "Cellulare",
-      "Email",
-      "Professione",
-      "Luogo Firma",
-      "Data Firma",
-      "Timestamp",
+      'Matricola',
+      'Data Iscrizione',
+      'Nome',
+      'Cognome',
+      'Genere',
+      'Data di Nascita',
+      'Luogo di Nascita',
+      'Comune di Residenza',
+      'Indirizzo',
+      'Cellulare',
+      'Email',
+      'Professione',
+      'Luogo Firma',
+      'Data Firma',
+      'Timestamp'
     ];
-
+    
     // Se il foglio non esiste, crealo
     if (!sheet) {
-      sheet = await doc.addSheet({
-        title: "Iscritti",
-        headerValues: requiredHeaders,
+      sheet = await doc.addSheet({ 
+        title: 'Iscritti',
+        headerValues: requiredHeaders
       });
     } else {
       // Carica le intestazioni esistenti
       await sheet.loadHeaderRow();
-
+      
       // Se il foglio esiste ma è vuoto, aggiungi le intestazioni
-      if (
-        sheet.rowCount === 0 ||
-        !sheet.headerValues ||
-        sheet.headerValues.length === 0
-      ) {
+      if (sheet.rowCount === 0 || !sheet.headerValues || sheet.headerValues.length === 0) {
         await sheet.setHeaderRow(requiredHeaders);
       } else {
         // Controlla se mancano delle colonne e aggiungile se necessario
         const existingHeaders = sheet.headerValues;
-        const missingHeaders = requiredHeaders.filter(
-          (header) => !existingHeaders.includes(header)
-        );
-
+        const missingHeaders = requiredHeaders.filter(header => !existingHeaders.includes(header));
+        
         if (missingHeaders.length > 0) {
           // Aggiungi le colonne mancanti
           const newHeaders = [...existingHeaders, ...missingHeaders];
           await sheet.setHeaderRow(newHeaders);
-          console.log(
-            `Aggiunte colonne mancanti: ${missingHeaders.join(", ")}`
-          );
+          console.log(`Aggiunte colonne mancanti: ${missingHeaders.join(', ')}`);
         }
       }
     }
 
     // Prepara i dati da inserire
     const rowData = {
-      Matricola: matricola,
-      "Data Iscrizione": new Date().toLocaleDateString("it-IT"),
-      Nome: formData.nome || "",
-      Cognome: formData.cognome || "",
-      Genere: formData.genere || "",
-      "Data di Nascita": formData.dataNascita
-        ? formatDate(formData.dataNascita)
-        : "",
-      "Luogo di Nascita": formData.luogoNascita || "",
-      "Comune di Residenza": formData.comune || "",
-      Indirizzo: formData.indirizzo || "",
-      Cellulare: formData.cellulare || "",
-      Email: formData.email || "",
-      Professione: formData.professione || "",
-      "Luogo Firma": formData.luogoFirma || formData.comune || "",
-      "Data Firma": formData.dataFirma
-        ? formatDate(formData.dataFirma)
-        : formatDate(new Date().toISOString().split("T")[0]),
-      Timestamp: new Date().toISOString(),
+      "Matricola": matricola,
+      "Data Iscrizione": new Date().toLocaleDateString('it-IT'),
+      "Nome": formData.nome || '',
+      "Cognome": formData.cognome || '',
+      "Genere": formData.genere || '',
+      "Data di Nascita": formData.dataNascita ? formatDate(formData.dataNascita) : '',
+      "Luogo di Nascita": formData.luogoNascita || '',
+      "Comune di Residenza": formData.comune || '',
+      "Indirizzo": formData.indirizzo || '',
+      "Cellulare": formData.cellulare || '',
+      "Email": formData.email || '',
+      "Professione": formData.professione || '',
+      "Luogo Firma": formData.luogoFirma || formData.comune || '',
+      "Data Firma": formData.dataFirma ? formatDate(formData.dataFirma) : formatDate(new Date().toISOString().split("T")[0]),
+      "Timestamp": new Date().toISOString()
     };
 
     // Aggiungi la riga al foglio
@@ -105,8 +90,9 @@ async function saveToGoogleSheets(formData, matricola) {
 
     console.log(`Dati salvati su Google Sheets per matricola: ${matricola}`);
     return { success: true, matricola };
+
   } catch (error) {
-    console.error("Errore nel salvataggio su Google Sheets:", error);
+    console.error('Errore nel salvataggio su Google Sheets:', error);
     throw new Error(`Errore Google Sheets: ${error.message}`);
   }
 }
@@ -132,8 +118,8 @@ export async function POST(req) {
     const { width, height } = page.getSize();
 
     const now = new Date();
-    const dateStr = now.toISOString().slice(2, 10).replace(/-/g, "");
-    const randomStr = Math.random().toString(36).substring(2, 6).toUpperCase();
+    const dateStr = now.toISOString().slice(2, 10).replace(/-/g, ""); 
+    const randomStr = Math.random().toString(36).substring(2, 6).toUpperCase(); 
     const matricola = `${dateStr}-${randomStr}`;
 
     const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
@@ -276,7 +262,7 @@ export async function POST(req) {
     try {
       await saveToGoogleSheets(formData, matricola);
     } catch (sheetsError) {
-      console.error("Errore nel salvataggio su Google Sheets:", sheetsError);
+      console.error('Errore nel salvataggio su Google Sheets:', sheetsError);
       // Continua comunque con l'invio email anche se Google Sheets fallisce
     }
 
@@ -335,9 +321,9 @@ Associazione OBRESCENDI`,
     }
 
     return new Response(
-      JSON.stringify({
+      JSON.stringify({ 
         message: "Modulo di adesione inviato con successo!",
-        matricola: matricola,
+        matricola: matricola
       }),
       { status: 200 }
     );

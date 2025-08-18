@@ -58,11 +58,11 @@ export default function Home() {
       if (response.ok) {
         router.push("/success");
       } else {
-        router.push("/error"); // ⬅️ aggiunto
+        router.push("/error"); 
       }
     } catch (error) {
       console.error("Errore:", error);
-      router.push("/error"); // ⬅️ aggiunto
+      router.push("/error"); 
     } finally {
       setLoading(false);
     }
