@@ -70,7 +70,7 @@ const ScheduleOverview = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 p-8">
       <div className=" mx-auto">
         {/* Header con controlli */}
-        <div className="mb-6 flex justify-between items-center">
+        <div className="mb-6 flex justify-between items-center flex-wrap gap-8">
           <h1 className="text-3xl font-bold text-white"> Gestione Turni</h1>
           
           <div className="flex items-center gap-4">
