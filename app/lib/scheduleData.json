@@ -3,10 +3,26 @@
     {
       "name": "Ballak",
       "tasks": [
-        { "time": "13:00-14:00", "activity": "RIUNIONE", "category": "meeting" },
-        { "time": "14:00-15:00", "activity": "ALL-FUORI", "category": "outdoor" },
-        { "time": "15:00-16:00", "activity": "ALL-FUORI", "category": "outdoor" },
-        { "time": "16:00-17:00", "activity": "DARKRURALISMO", "category": "special" },
+        {
+          "time": "13:00-14:00",
+          "activity": "RIUNIONE",
+          "category": "meeting"
+        },
+        {
+          "time": "14:00-15:00",
+          "activity": "ALL-FUORI",
+          "category": "outdoor"
+        },
+        {
+          "time": "15:00-16:00",
+          "activity": "ALL-FUORI",
+          "category": "outdoor"
+        },
+        {
+          "time": "16:00-17:00",
+          "activity": "DARKRURALISMO",
+          "category": "special"
+        },
         { "time": "17:00-18:00", "activity": "ARTE", "category": "art" },
         { "time": "18:00-19:00", "activity": "ARTE", "category": "art" },
         { "time": "19:00-20:00", "activity": "ARTE", "category": "art" },
@@ -24,7 +40,11 @@
     {
       "name": "Gioele",
       "tasks": [
-        { "time": "13:00-14:00", "activity": "RIUNIONE", "category": "meeting" },
+        {
+          "time": "13:00-14:00",
+          "activity": "RIUNIONE",
+          "category": "meeting"
+        },
         { "time": "14:00-15:00", "activity": "PALCO", "category": "stage" },
         { "time": "15:00-16:00", "activity": "PALCO", "category": "stage" },
         { "time": "16:00-17:00", "activity": "PALCO", "category": "stage" },
@@ -36,13 +56,19 @@
         { "time": "22:00-23:00", "activity": "BAR", "category": "bar" },
         { "time": "23:00-00:00", "activity": "BAR", "category": "bar" },
         { "time": "00:00-01:00", "activity": "BAR", "category": "bar" },
-        { "time": "01:00-02:00", "activity": "BAR", "category": "bar" }
+        { "time": "01:00-02:00", "activity": "BAR", "category": "bar" },
+        { "time": "03:00-04:00", "activity": "PULIZIA", "category": "pulizia" },
+        { "time": "04:00-05:00", "activity": "PULIZIA", "category": "pulizia" }
       ]
     },
     {
       "name": "Bizio",
       "tasks": [
-        { "time": "13:00-14:00", "activity": "RIUNIONE", "category": "meeting" },
+        {
+          "time": "13:00-14:00",
+          "activity": "RIUNIONE",
+          "category": "meeting"
+        },
         { "time": "14:00-15:00", "activity": "PALCO", "category": "stage" },
         { "time": "15:00-16:00", "activity": "PALCO", "category": "stage" },
         { "time": "16:00-17:00", "activity": "PALCO", "category": "stage" },
@@ -52,13 +78,19 @@
         { "time": "20:00-21:00", "activity": "PALCO", "category": "stage" },
         { "time": "21:00-22:00", "activity": "MUSICA", "category": "music" },
         { "time": "22:00-23:00", "activity": "PALCO", "category": "stage" },
-        { "time": "23:00-00:00", "activity": "PALCO", "category": "stage" }
+        { "time": "23:00-00:00", "activity": "PALCO", "category": "stage" },
+        { "time": "03:00-04:00", "activity": "PULIZIA", "category": "pulizia" },
+        { "time": "04:00-05:00", "activity": "PULIZIA", "category": "pulizia" }
       ]
     },
     {
       "name": "Carlo",
       "tasks": [
-        { "time": "13:00-14:00", "activity": "RIUNIONE", "category": "meeting" },
+        {
+          "time": "13:00-14:00",
+          "activity": "RIUNIONE",
+          "category": "meeting"
+        },
         { "time": "14:00-15:00", "activity": "LUCI", "category": "lights" },
         { "time": "15:00-16:00", "activity": "LUCI", "category": "lights" },
         { "time": "16:00-17:00", "activity": "ALL-BAR", "category": "bar" },
@@ -77,21 +109,43 @@
     {
       "name": "Fede",
       "tasks": [
-        { "time": "13:00-14:00", "activity": "RIUNIONE", "category": "meeting" },
+        {
+          "time": "13:00-14:00",
+          "activity": "RIUNIONE",
+          "category": "meeting"
+        },
         { "time": "14:00-15:00", "activity": "ALL-BAR", "category": "bar" },
         { "time": "15:00-16:00", "activity": "ALL-BAR", "category": "bar" },
         { "time": "16:00-17:00", "activity": "ALL-BAR", "category": "bar" },
         { "time": "17:00-18:00", "activity": "ALL-ACC", "category": "welcome" },
         { "time": "18:00-19:00", "activity": "ALL-ACC", "category": "welcome" },
-        { "time": "19:00-20:00", "activity": "ACCOGLIENZA", "category": "welcome" },
-        { "time": "20:00-21:00", "activity": "ACCOGLIENZA", "category": "welcome" },
-        { "time": "21:00-22:00", "activity": "ACCOGLIENZA", "category": "welcome" }
+        {
+          "time": "19:00-20:00",
+          "activity": "ACCOGLIENZA",
+          "category": "welcome"
+        },
+        {
+          "time": "20:00-21:00",
+          "activity": "ACCOGLIENZA",
+          "category": "welcome"
+        },
+        {
+          "time": "21:00-22:00",
+          "activity": "ACCOGLIENZA",
+          "category": "welcome"
+        },
+        { "time": "03:00-04:00", "activity": "PULIZIA", "category": "pulizia" },
+        { "time": "04:00-05:00", "activity": "PULIZIA", "category": "pulizia" }
       ]
     },
     {
       "name": "Angi",
       "tasks": [
-        { "time": "13:00-14:00", "activity": "RIUNIONE", "category": "meeting" },
+        {
+          "time": "13:00-14:00",
+          "activity": "RIUNIONE",
+          "category": "meeting"
+        },
         { "time": "14:00-15:00", "activity": "ALL-FOOD", "category": "food" },
         { "time": "15:00-16:00", "activity": "ALL-FOOD", "category": "food" },
         { "time": "16:00-17:00", "activity": "ALL-FOOD", "category": "food" },
@@ -100,14 +154,20 @@
         { "time": "19:00-20:00", "activity": "FOOD", "category": "food" },
         { "time": "20:00-21:00", "activity": "FOOD", "category": "food" },
         { "time": "21:00-22:00", "activity": "FOOD", "category": "food" },
-        { "time": "22:00-23:00", "activity": "JOLLY", "category": "jolly" },
-        { "time": "00:00-01:00", "activity": "FOOD", "category": "food" }
+        { "time": "23:00-00:00", "activity": "ACCOGLIENZA", "category": "welcome" },
+        { "time": "00:00-01:00", "activity": "FOOD", "category": "food" },
+        { "time": "03:00-04:00", "activity": "PULIZIA", "category": "pulizia" },
+        { "time": "04:00-05:00", "activity": "PULIZIA", "category": "pulizia" }
       ]
     },
     {
       "name": "Gabri",
       "tasks": [
-        { "time": "13:00-14:00", "activity": "RIUNIONE", "category": "meeting" },
+        {
+          "time": "13:00-14:00",
+          "activity": "RIUNIONE",
+          "category": "meeting"
+        },
         { "time": "14:00-15:00", "activity": "ALL-MERCH", "category": "merch" },
         { "time": "15:00-16:00", "activity": "ALL-MERCH", "category": "merch" },
         { "time": "16:00-17:00", "activity": "ALL-MERCH", "category": "merch" },
@@ -119,16 +179,25 @@
         { "time": "22:00-23:00", "activity": "FOOD", "category": "food" },
         { "time": "23:00-00:00", "activity": "BAR", "category": "bar" },
         { "time": "00:00-01:00", "activity": "BAR", "category": "bar" },
-        { "time": "01:00-02:00", "activity": "BAR", "category": "bar" }
+        { "time": "03:00-04:00", "activity": "PULIZIA", "category": "pulizia" },
+        { "time": "04:00-05:00", "activity": "PULIZIA", "category": "pulizia" }
       ]
     },
     {
       "name": "Lau",
       "tasks": [
-        { "time": "13:00-14:00", "activity": "RIUNIONE", "category": "meeting" },
+        {
+          "time": "13:00-14:00",
+          "activity": "RIUNIONE",
+          "category": "meeting"
+        },
         { "time": "14:00-15:00", "activity": "ALL-BAR", "category": "bar" },
         { "time": "15:00-16:00", "activity": "ALL-BAR", "category": "bar" },
-        { "time": "16:00-17:00", "activity": "DARKRURALISMO", "category": "special" },
+        {
+          "time": "16:00-17:00",
+          "activity": "DARKRURALISMO",
+          "category": "special"
+        },
         { "time": "17:00-18:00", "activity": "ALL-BAR", "category": "bar" },
         { "time": "18:00-19:00", "activity": "ALL-BAR", "category": "bar" },
         { "time": "19:00-20:00", "activity": "BAR", "category": "bar" },
@@ -136,13 +205,19 @@
         { "time": "21:00-22:00", "activity": "MUSICA", "category": "music" },
         { "time": "22:00-23:00", "activity": "BAR", "category": "bar" },
         { "time": "23:00-00:00", "activity": "BAR", "category": "bar" },
-        { "time": "01:00-02:00", "activity": "JOLLY", "category": "jolly" }
+        { "time": "01:00-02:00", "activity": "JOLLY", "category": "jolly" },
+        { "time": "03:00-04:00", "activity": "PULIZIA", "category": "pulizia" },
+        { "time": "04:00-05:00", "activity": "PULIZIA", "category": "pulizia" }
       ]
     },
     {
       "name": "Leddino",
       "tasks": [
-        { "time": "13:00-14:00", "activity": "RIUNIONE", "category": "meeting" },
+        {
+          "time": "13:00-14:00",
+          "activity": "RIUNIONE",
+          "category": "meeting"
+        },
         { "time": "14:00-15:00", "activity": "ALL-FOOD", "category": "food" },
         { "time": "15:00-16:00", "activity": "ALL-FOOD", "category": "food" },
         { "time": "16:00-17:00", "activity": "ALL-FOOD", "category": "food" },
@@ -152,13 +227,19 @@
         { "time": "20:00-21:00", "activity": "FOOD", "category": "food" },
         { "time": "21:00-22:00", "activity": "MUSICA", "category": "music" },
         { "time": "22:00-23:00", "activity": "FOOD", "category": "food" },
-        { "time": "00:00-01:00", "activity": "FOOD", "category": "food" }
+        { "time": "00:00-01:00", "activity": "FOOD", "category": "food" },
+        { "time": "03:00-04:00", "activity": "PULIZIA", "category": "pulizia" },
+        { "time": "04:00-05:00", "activity": "PULIZIA", "category": "pulizia" }
       ]
     },
     {
       "name": "Lore",
       "tasks": [
-        { "time": "13:00-14:00", "activity": "RIUNIONE", "category": "meeting" },
+        {
+          "time": "13:00-14:00",
+          "activity": "RIUNIONE",
+          "category": "meeting"
+        },
         { "time": "14:00-15:00", "activity": "ALL-BAR", "category": "bar" },
         { "time": "15:00-16:00", "activity": "ALL-BAR", "category": "bar" },
         { "time": "16:00-17:00", "activity": "ALL-BAR", "category": "bar" },
@@ -167,16 +248,19 @@
         { "time": "19:00-20:00", "activity": "BAR", "category": "bar" },
         { "time": "20:00-21:00", "activity": "BAR", "category": "bar" },
         { "time": "21:00-22:00", "activity": "BAR", "category": "bar" },
-        { "time": "22:00-23:00", "activity": "BAR", "category": "bar" },
-        { "time": "23:00-00:00", "activity": "BAR", "category": "bar" },
         { "time": "02:00-03:00", "activity": "BAR", "category": "bar" },
-        { "time": "03:00-04:00", "activity": "BAR", "category": "bar" }
+        { "time": "03:00-04:00", "activity": "BAR", "category": "bar" },
+        { "time": "04:00-05:00", "activity": "PULIZIA", "category": "pulizia" }
       ]
     },
     {
       "name": "Michi",
       "tasks": [
-        { "time": "13:00-14:00", "activity": "RIUNIONE", "category": "meeting" },
+        {
+          "time": "13:00-14:00",
+          "activity": "RIUNIONE",
+          "category": "meeting"
+        },
         { "time": "14:00-15:00", "activity": "PALCO", "category": "stage" },
         { "time": "15:00-16:00", "activity": "PALCO", "category": "stage" },
         { "time": "16:00-17:00", "activity": "PALCO", "category": "stage" },
@@ -186,48 +270,98 @@
         { "time": "20:00-21:00", "activity": "PALCO", "category": "stage" },
         { "time": "21:00-22:00", "activity": "MUSICA", "category": "music" },
         { "time": "22:00-23:00", "activity": "PALCO", "category": "stage" },
-        { "time": "23:00-00:00", "activity": "PALCO", "category": "stage" }
+        { "time": "23:00-00:00", "activity": "PALCO", "category": "stage" },
+        { "time": "03:00-04:00", "activity": "PULIZIA", "category": "pulizia" },
+        { "time": "04:00-05:00", "activity": "PULIZIA", "category": "pulizia" }
       ]
     },
     {
       "name": "Andre",
       "tasks": [
-        { "time": "13:00-14:00", "activity": "RIUNIONE", "category": "meeting" },
-        { "time": "14:00-15:00", "activity": "ALL-FUORI", "category": "outdoor" },
-        { "time": "15:00-16:00", "activity": "ALL-FUORI", "category": "outdoor" },
-        { "time": "16:00-17:00", "activity": "DARKRURALISMO", "category": "special" },
+        {
+          "time": "13:00-14:00",
+          "activity": "RIUNIONE",
+          "category": "meeting"
+        },
+        {
+          "time": "14:00-15:00",
+          "activity": "ALL-FUORI",
+          "category": "outdoor"
+        },
+        {
+          "time": "15:00-16:00",
+          "activity": "ALL-FUORI",
+          "category": "outdoor"
+        },
+        {
+          "time": "16:00-17:00",
+          "activity": "DARKRURALISMO",
+          "category": "special"
+        },
         { "time": "17:00-18:00", "activity": "ALL-BAR", "category": "bar" },
         { "time": "18:00-19:00", "activity": "ALL-BAR", "category": "bar" },
         { "time": "19:00-20:00", "activity": "BAR", "category": "bar" },
         { "time": "20:00-21:00", "activity": "BAR", "category": "bar" },
         { "time": "21:00-22:00", "activity": "BAR", "category": "bar" },
+        { "time": "22:00-23:00", "activity": "ACCOGLIENZA", "category": "welcome" },
         { "time": "00:00-01:00", "activity": "BAR", "category": "bar" },
-        { "time": "01:00-02:00", "activity": "BAR", "category": "bar" }
+        { "time": "01:00-02:00", "activity": "BAR", "category": "bar" },
+        { "time": "03:00-04:00", "activity": "PULIZIA", "category": "pulizia" },
+        { "time": "04:00-05:00", "activity": "PULIZIA", "category": "pulizia" }
       ]
     },
     {
       "name": "Chia",
       "tasks": [
-        { "time": "13:00-14:00", "activity": "RIUNIONE", "category": "meeting" },
-        { "time": "14:00-15:00", "activity": "ALL-FUORI", "category": "outdoor" },
-        { "time": "15:00-16:00", "activity": "ALL-FUORI", "category": "outdoor" },
+        {
+          "time": "13:00-14:00",
+          "activity": "RIUNIONE",
+          "category": "meeting"
+        },
+        {
+          "time": "14:00-15:00",
+          "activity": "ALL-FUORI",
+          "category": "outdoor"
+        },
+        {
+          "time": "15:00-16:00",
+          "activity": "ALL-FUORI",
+          "category": "outdoor"
+        },
         { "time": "16:00-17:00", "activity": "ALL-BAR", "category": "bar" },
         { "time": "17:00-18:00", "activity": "ALL-ACC", "category": "welcome" },
         { "time": "18:00-19:00", "activity": "ALL-ACC", "category": "welcome" },
-        { "time": "19:00-20:00", "activity": "ACCOGLIENZA", "category": "welcome" },
-        { "time": "20:00-21:00", "activity": "ACCOGLIENZA", "category": "welcome" },
-        { "time": "21:00-22:00", "activity": "ACCOGLIENZA", "category": "welcome" },
+        {
+          "time": "19:00-20:00",
+          "activity": "ACCOGLIENZA",
+          "category": "welcome"
+        },
+        {
+          "time": "20:00-21:00",
+          "activity": "ACCOGLIENZA",
+          "category": "welcome"
+        },
+        {
+          "time": "21:00-22:00",
+          "activity": "ACCOGLIENZA",
+          "category": "welcome"
+        },
         { "time": "23:00-00:00", "activity": "CASSA", "category": "cashier" },
         { "time": "00:00-01:00", "activity": "CASSA", "category": "cashier" },
         { "time": "01:00-02:00", "activity": "CASSA", "category": "cashier" },
         { "time": "02:00-03:00", "activity": "CASSA", "category": "cashier" },
-        { "time": "03:00-04:00", "activity": "CASSA", "category": "cashier" }
+        { "time": "03:00-04:00", "activity": "CASSA", "category": "cashier" },
+        { "time": "04:00-05:00", "activity": "PULIZIA", "category": "pulizia" }
       ]
     },
     {
       "name": "Robi",
       "tasks": [
-        { "time": "13:00-14:00", "activity": "RIUNIONE", "category": "meeting" },
+        {
+          "time": "13:00-14:00",
+          "activity": "RIUNIONE",
+          "category": "meeting"
+        },
         { "time": "14:00-15:00", "activity": "LUCI", "category": "lights" },
         { "time": "15:00-16:00", "activity": "LUCI", "category": "lights" },
         { "time": "16:00-17:00", "activity": "LUCI", "category": "lights" },
@@ -236,13 +370,19 @@
         { "time": "19:00-20:00", "activity": "JOLLY", "category": "jolly" },
         { "time": "20:00-21:00", "activity": "PALCO", "category": "stage" },
         { "time": "21:00-22:00", "activity": "PALCO", "category": "stage" },
-        { "time": "22:00-23:00", "activity": "PALCO", "category": "stage" }
+        { "time": "22:00-23:00", "activity": "PALCO", "category": "stage" },
+        { "time": "03:00-04:00", "activity": "PULIZIA", "category": "pulizia" },
+        { "time": "04:00-05:00", "activity": "PULIZIA", "category": "pulizia" }
       ]
     },
     {
       "name": "Reo",
       "tasks": [
-        { "time": "13:00-14:00", "activity": "RIUNIONE", "category": "meeting" },
+        {
+          "time": "13:00-14:00",
+          "activity": "RIUNIONE",
+          "category": "meeting"
+        },
         { "time": "14:00-15:00", "activity": "ALL-MERCH", "category": "merch" },
         { "time": "15:00-16:00", "activity": "ALL-MERCH", "category": "merch" },
         { "time": "16:00-17:00", "activity": "ALL-MERCH", "category": "merch" },
@@ -252,13 +392,19 @@
         { "time": "20:00-21:00", "activity": "MERCH", "category": "merch" },
         { "time": "21:00-22:00", "activity": "MERCH", "category": "merch" },
         { "time": "23:00-00:00", "activity": "MERCH", "category": "merch" },
-        { "time": "00:00-01:00", "activity": "MERCH", "category": "merch" }
+        { "time": "00:00-01:00", "activity": "MERCH", "category": "merch" },
+        { "time": "03:00-04:00", "activity": "PULIZIA", "category": "pulizia" },
+        { "time": "04:00-05:00", "activity": "PULIZIA", "category": "pulizia" }
       ]
     },
     {
       "name": "Bilbo",
       "tasks": [
-        { "time": "13:00-14:00", "activity": "RIUNIONE", "category": "meeting" },
+        {
+          "time": "13:00-14:00",
+          "activity": "RIUNIONE",
+          "category": "meeting"
+        },
         { "time": "14:00-15:00", "activity": "ALL-MERCH", "category": "merch" },
         { "time": "15:00-16:00", "activity": "ALL-MERCH", "category": "merch" },
         { "time": "16:00-17:00", "activity": "ALL-MERCH", "category": "merch" },
@@ -270,15 +416,29 @@
         { "time": "22:00-23:00", "activity": "MERCH", "category": "merch" },
         { "time": "23:00-00:00", "activity": "MERCH", "category": "merch" },
         { "time": "00:00-01:00", "activity": "MERCH", "category": "merch" },
-        { "time": "01:00-02:00", "activity": "JOLLY", "category": "jolly" }
+        { "time": "01:00-02:00", "activity": "JOLLY", "category": "jolly" },
+        { "time": "03:00-04:00", "activity": "PULIZIA", "category": "pulizia" },
+        { "time": "04:00-05:00", "activity": "PULIZIA", "category": "pulizia" }
       ]
     }
   ],
   "timeSlots": [
-    "13:00-14:00", "14:00-15:00", "15:00-16:00", "16:00-17:00",
-    "17:00-18:00", "18:00-19:00", "19:00-20:00", "20:00-21:00",
-    "21:00-22:00", "22:00-23:00", "23:00-00:00", "00:00-01:00",
-    "01:00-02:00", "02:00-03:00", "03:00-04:00", "04:00-05:00"
+    "13:00-14:00",
+    "14:00-15:00",
+    "15:00-16:00",
+    "16:00-17:00",
+    "17:00-18:00",
+    "18:00-19:00",
+    "19:00-20:00",
+    "20:00-21:00",
+    "21:00-22:00",
+    "22:00-23:00",
+    "23:00-00:00",
+    "00:00-01:00",
+    "01:00-02:00",
+    "02:00-03:00",
+    "03:00-04:00",
+    "04:00-05:00"
   ],
   "categories": {
     "meeting": { "label": "Riunione", "color": "#ef4444" },
@@ -294,6 +454,7 @@
     "outdoor": { "label": "All-Fuori", "color": "#84cc16" },
     "lights": { "label": "Luci", "color": "#eab308" },
     "jolly": { "label": "Jolly", "color": "#fbbf24" },
-    "special": { "label": "Darkuralismo", "color": "#059669" }
+    "special": { "label": "Darkuralismo", "color": "#059669" },
+    "pulizia": { "label": "Pulizia", "color": "#92400e" }
   }
 }
