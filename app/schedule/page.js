@@ -21,7 +21,6 @@ const ScheduleOverview = () => {
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 p-8 flex items-center justify-center">
         <div className="text-white text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-violet-500 mx-auto mb-4"></div>
-          <h2 className="text-2xl font-bold">Caricamento turni da Firebase...</h2>
         </div>
       </div>
     );
@@ -76,14 +75,29 @@ const ScheduleOverview = () => {
           
           <div className="flex items-center gap-4">
             {/* Toggle modalità editing */}
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={isEditMode}
-                onChange={(e) => setIsEditMode(e.target.checked)}
-                className="rounded"
-              />
-              <span className="text-white font-medium">✏️ Modalità Editor</span>
+            <label className="flex items-center gap-3 cursor-pointer">
+              <div className="relative">
+                <input
+                  type="checkbox"
+                  checked={isEditMode}
+                  onChange={(e) => setIsEditMode(e.target.checked)}
+                  className="sr-only"
+                />
+                <div className={`w-14 h-8 rounded-full transition-all duration-300 ${
+                  isEditMode ? 'bg-violet-600' : 'bg-gray-600'
+                }`}>
+                  <div className={`absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow-lg transition-all duration-300 transform ${
+                    isEditMode ? 'translate-x-6' : 'translate-x-0'
+                  }`}>
+                    
+                  </div>
+                </div>
+              </div>
+              <span className={`font-medium transition-colors ${
+                isEditMode ? 'text-violet-300' : 'text-white'
+              }`}>
+                {isEditMode ? ' Modalità Editor' : 'Modalità Visualizzazione'}
+              </span>
             </label>
             
             {/* Indicatore Firebase attivo */}
@@ -100,21 +114,7 @@ const ScheduleOverview = () => {
           </div>
         </div>
 
-        {/* Info modalità editing */}
-        {isEditMode ? (
-          <div className="mb-4 p-3 bg-violet-900/30 border border-violet-700 rounded-lg">
-            <p className="text-violet-200 text-sm">
-              ✏️ <strong>Modalità Editor Attiva!</strong> Clicca su una cella per modificarla
-            </p>
-          </div>
-        ) : (
-          <div className="mb-4 p-3 bg-green-900/30 border border-green-700 rounded-lg">
-            <p className="text-green-200 text-sm">
-              👀 <strong>Modalità Visualizzazione.</strong> Attiva la "Modalità Editor" per modificare i turni.
-            </p>
-          </div>
-        )}
-
+   
         <div className="overflow-x-auto shadow-2xl rounded-lg ">
           <table className="w-full bg-gray-800/80 backdrop-blur-sm border-collapse ">
             <thead>
