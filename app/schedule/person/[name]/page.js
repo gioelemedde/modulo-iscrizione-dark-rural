@@ -43,7 +43,8 @@ const PersonSchedule = () => {
         </div>
 
         <div className="bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-2xl overflow-hidden">
-          <table className="w-full">
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[425px]">
             <thead>
               <tr className="bg-violet-800">
                 <th className="border border-gray-500 px-6 py-4 text-white font-bold text-left">
@@ -87,6 +88,7 @@ const PersonSchedule = () => {
               })}
             </tbody>
           </table>
+          </div>
         </div>
 
         {/* Statistiche */}

@@ -48,16 +48,16 @@ const CategorySchedule = () => {
     });
   });
 
-  // Funzione per convertire l'orario in minuti per l'ordinamento corretto
+
   const timeToMinutes = (timeStr) => {
-    // Estrae solo l'orario di inizio (prima del trattino)
+
     const startTime = timeStr.split('-')[0];
     const [hours, minutes] = startTime.split(':').map(Number);
     let totalMinutes = hours * 60 + minutes;
     
-    // Gestisce la continuità notturna: orari da 00:00 a 05:59 sono considerati del giorno dopo
+
     if (hours >= 0 && hours < 6) {
-      totalMinutes += 24 * 60; // Aggiunge 24 ore
+      totalMinutes += 24 * 60;
     }
     
     return totalMinutes;
