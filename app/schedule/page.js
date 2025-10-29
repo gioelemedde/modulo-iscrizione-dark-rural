@@ -72,7 +72,7 @@ const ScheduleOverview = () => {
       <div className=" mx-auto">
         {/* Header con controlli */}
         <div className="mb-6 flex justify-between items-center">
-          <h1 className="text-3xl font-bold text-white">🔥 Gestione Turni Firebase</h1>
+          <h1 className="text-3xl font-bold text-white"> Gestione Turni</h1>
           
           <div className="flex items-center gap-4">
             {/* Toggle modalità editing */}
@@ -89,7 +89,6 @@ const ScheduleOverview = () => {
             {/* Indicatore Firebase attivo */}
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-green-400 text-sm font-medium">🔄 Live Firebase</span>
             </div>
             
             {/* Indicatore salvataggio */}
