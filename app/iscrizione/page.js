@@ -121,7 +121,7 @@ export default function IscrizionePage() {
         </div>
       ) : (
         // Steps 1-3: Layout completo con progress bar
-        <div className="max-w-md mx-auto bg-gray-100/10 backdrop-blur-lg rounded-lg shadow-md p-6 shadow-violet-400 min-h-screen">
+        <div className="max-w-md mx-auto bg-gray-100/10 backdrop-blur-lg rounded-lg shadow-md p-6 shadow-[#9663b1] min-h-screen">
           <h1 className="text-2xl font-bold text-center mb-6 text-white">
             Iscrizione OBRESCENDI
           </h1>
@@ -131,7 +131,7 @@ export default function IscrizionePage() {
                 <div key={item} className="flex-1">
                   <div
                     className={`h-2 ${
-                      item <= step ? "bg-violet-500" : "bg-gray-300"
+                      item <= step ? "bg-violet-600" : "bg-gray-300"
                     }`}
                   ></div>
                   <div className="text-center mt-2 text-sm">
