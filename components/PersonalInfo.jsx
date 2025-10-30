@@ -49,7 +49,7 @@ const PersonalInfo = ({ nextStep, handleChange, values }) => {
           className="block text-white text-sm font-bold mb-2"
           htmlFor="nome"
         >
-          Nome N
+          Nome *
         </label>
         <input
           type="text"
