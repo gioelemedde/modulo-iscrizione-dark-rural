@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import PersonalInfo from "./components/PersonalInfo";
-import SignatureCanvas from "./components/SignatureCanvas";
-import ReviewForm from "./components/ReviewForm";
+import PersonalInfo from "../components/PersonalInfo";
+import SignatureCanvas from "../components/SignatureCanvas";
+import ReviewForm from "../components/ReviewForm";
 import { useRouter } from "next/navigation";
 
 export default function Home() {

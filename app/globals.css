@@ -3,7 +3,7 @@
 
 
 body {
-  background: linear-gradient(rgba(0, 0, 0, 0.6),rgba(0, 0, 0, 0.6)),url(./img/bizio.jpg);
+  background: linear-gradient(rgba(0, 0, 0, 0.6),rgba(0, 0, 0, 0.6)),url(../img/bizio.jpg);
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;

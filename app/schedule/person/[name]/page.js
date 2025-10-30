@@ -3,11 +3,65 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import React from "react";
-import scheduleData from "../../../lib/scheduleData.json";
+import { useFirebaseSchedule } from "@/hooks/useFirebaseSchedule";
 
 const PersonSchedule = () => {
   const params = useParams();
   const name = params.name;
+  
+  const { 
+    scheduleData, 
+    loading, 
+    error 
+  } = useFirebaseSchedule();
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 p-8 flex items-center justify-center">
+        <div className="text-white text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-violet-500 mx-auto mb-4"></div>
+          <h2 className="text-2xl font-bold">Caricamento da Firebase...</h2>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 p-8 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-red-500 mb-4">Errore Firebase</h2>
+          <p className="text-gray-300 mb-4">{error}</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded"
+          >
+            Ricarica pagina
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // No data state
+  if (!scheduleData) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 p-8 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-yellow-500 mb-4">Nessun dato trovato</h2>
+          <p className="text-gray-300 mb-4">Il database Firebase è vuoto.</p>
+          <a
+            href="/init"
+            className="bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded inline-block"
+          >
+            🚀 Carica Dati Iniziali
+          </a>
+        </div>
+      </div>
+    );
+  }
 
   const person = scheduleData.schedule.find((p) => p.name === name);
 

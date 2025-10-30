@@ -283,7 +283,8 @@ const PersonalInfo = ({ nextStep, handleChange, values }) => {
         </label>
         <ReCAPTCHA
           ref={recaptchaRef}
-          sitekey="6LflIg4rAAAAAMqvBbUrPAa1I6Ufwmf2yFIhCkBF"
+          sitekey="6Ld_5vsrAAAAAFlTk5iZAdHJFRB8VILD4OEloLMb"
+          // sitekey="6LflIg4rAAAAAMqvBbUrPAa1I6Ufwmf2yFIhCkBF"
           onChange={handleCaptchaChange}
           onExpired={handleCaptchaExpired}
           theme="dark"

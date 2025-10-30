@@ -8,7 +8,7 @@ export default function Error() {
         <h1 className="text-6xl font-bold text-violet-700">OPS</h1>
         <h2 className="text-2xl font-bold">Qualcosa e' andato storto </h2>
         <Image
-                  src="/img/bizio2.jpg" 
+                  src="@/img/bizio2.jpg" 
                   alt="locandina" 
                   width={400} 
                   height={400} 
