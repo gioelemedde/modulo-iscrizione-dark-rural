@@ -25,7 +25,7 @@ export default function Home() {
           </h1>
           
           <p className="text-lg md:text-xl text-gray-300 mb-6 md:mb-8 leading-relaxed">
-           lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Diventa membro della nostra associazione e ppoter partecipare ai nostri eventi .
           </p>
 
           <div className="space-y-4">
