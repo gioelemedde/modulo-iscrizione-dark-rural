@@ -1,131 +1,63 @@
-"use client";
-import { useState } from "react";
-import PersonalInfo from "../components/PersonalInfo";
-import SignatureCanvas from "../components/SignatureCanvas";
-import ReviewForm from "../components/ReviewForm";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
-  const [step, setStep] = useState(1);
-  const router = useRouter();
-  const [formData, setFormData] = useState({
-    nome: "",
-    cognome: "",
-    luogoNascita: "",
-    dataNascita: "",
-    comune: "",
-    indirizzo: "",
-    cellulare: "",
-    email: "",
-    professione: "",
-    luogoFirma: "",
-    dataFirma: "",
-    firma: null,
-  });
-
-  const [loading, setLoading] = useState(false); 
-
-  const nextStep = () => {
-    setStep(step + 1);
-  };
-
-  const prevStep = () => {
-    setStep(step - 1);
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSignature = (signatureData) => {
-    setFormData({ ...formData, firma: signatureData });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-  
-    try {
-      const response = await fetch("/api/submit-form", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-  
-      if (response.ok) {
-        router.push("/success");
-      } else {
-        router.push("/error"); 
-      }
-    } catch (error) {
-      console.error("Errore:", error);
-      router.push("/error"); 
-    } finally {
-      setLoading(false);
-    }
-  };
-  
-
-  const renderStep = () => {
-    switch (step) {
-      case 1:
-        return (
-          <PersonalInfo
-            nextStep={nextStep}
-            handleChange={handleChange}
-            values={formData}
-          />
-        );
-      case 2:
-        return (
-          <SignatureCanvas
-            nextStep={nextStep}
-            prevStep={prevStep}
-            handleSignature={handleSignature}
-          />
-        );
-      case 3:
-        return (
-          <ReviewForm
-            prevStep={prevStep}
-            values={formData}
-            handleSubmit={handleSubmit}
-            loading={loading}
-          />
-        );
-      default:
-        return null;
-    }
-  };
-
   return (
-    <div className="container mx-auto px-4 py-8 text-white">
-      <div className="max-w-md mx-auto bg-gray-100/10 backdrop-blur-lg rounded-lg shadow-md p-6 shadow-violet-400 min-h-screen">
-        <h1 className="text-2xl font-bold text-center mb-6 text-white">
-          Iscrizione OBRESCENDI
-        </h1>
-        <div className="mb-6">
-          <div className="flex items-center">
-            {[1, 2, 3].map((item) => (
-              <div key={item} className="flex-1">
-                <div
-                  className={`h-2 ${
-                    item <= step ? "bg-violet-500" : "bg-gray-300"
-                  }`}
-                ></div>
-                <div className="text-center mt-2 text-sm">
-                  {item === 1 && "Dati"}
-                  {item === 2 && "Firma"}
-                  {item === 3 && "Revisione"}
-                </div>
-              </div>
-            ))}
+    <div className="min-h-screen flex flex-col lg:flex-row">
+    
+      {/* Colonna sinistra - Contenuto con sfondo nero */}
+      <div className="w-full lg:w-2/5 bg-black flex flex-col justify-center px-6 md:px-12 relative">
+  
+        {/* Logo in alto */}
+        <div className="absolute top-4 left-[50%] md:top-6 translate-x-[-50%]">
+          <Image
+            src="/img/logo.png"
+            alt="logo"
+            width={150}
+            height={150}
+      
+          />
+        </div>
+
+        <div className="text-white mt-28 lg:mt-0 py-10">
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+            Benvenuto in<br/>OBRESCENDI
+          </h1>
+          
+          <p className="text-lg md:text-xl text-gray-300 mb-6 md:mb-8 leading-relaxed">
+           lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          </p>
+
+          <div className="space-y-4">
+            <Link
+              href="/iscrizione"
+              className="block w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-3 md:py-4 px-6 md:px-8 rounded-lg transition-colors text-center text-base md:text-lg"
+            >
+              Inizia Iscrizione
+            </Link>
+            
+            {/* <Link
+              href="/schedule"
+              className="block w-full border-2 border-violet-600 hover:bg-violet-600 text-violet-400 hover:text-white font-bold py-3 md:py-4 px-6 md:px-8 rounded-lg transition-colors text-center text-base md:text-lg"
+            >
+              Vedi Programma
+            </Link> */}
           </div>
         </div>
-        {renderStep()}
+      </div>
+
+      {/* Colonna destra - Immagine grande */}
+      <div className="w-full lg:w-3/5 relative min-h-[60vh] lg:min-h-screen overflow-hidden">
+        <Image
+          src="/img/bizio.jpg"
+          alt="Immagine principale"
+          fill
+          className="object-cover object-center"
+          priority
+        />
+        
+        {/* Overlay gradiente */}
+        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-black/20 rounded-none lg:rounded-bl-3xl"></div>
       </div>
     </div>
   );
