@@ -7,10 +7,10 @@ import { JWT } from "google-auth-library";
 async function saveToGoogleSheets(formData, matricola) {
   try {
     // Configurazione JWT per l'autenticazione
-    const serviceAccountAuth = new JWT({
-      email: "dr-iscrizione-form@dark-rural-1744103066544.iam.gserviceaccount.com",
-      key:"-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDJyDPyJYb2vf7d\nUD1QLyx8Ba9iLlUPsIhJ5niCyfauKkLkr9VXMtH9LXN3gxHGn1rHiTti3bim+iiR\ngCK5b5fHiD4aff1aA4sp2mJHC29K4SgPhxYBV0IGFn8y7DAXzUiw65xrPUpwyVg2\nirGem9dOrS777ZeITusiR7GYvHefqvRVHCRA1rCPdLg+Ykq8YJmgs8tbhpsyB0gg\nNxOWOI/l0th3QZQXzmubFEz/RSqvQogAwBqHNHJFaUDcjuKeAB/uBFNXXCf/Yxl4\nu0IsPt6mAZSSUK/SG+Yg8P2jggEb2O1kRQr04iRReqywK3wcd0/cLiLNKbZ7Dg6z\nqF7rchHHAgMBAAECggEATGkhbq2SVcauCD3V8hLjHBYFC79y262kdqOteA2l+d8s\nFLCXL92hUmgPRS8foKEAvfX0RKSkw6qQiUTGIYWmKtundN3H/nnADbnSpIeqfecU\nhgjIJvrVmDuVsIFrVuAYilK2mY+MrHg6jPDpgSAPoQ4I8ELRMr974C/ZC3c3L4Ff\npRFU17A2WEZC7ih1+VtIID5sAx7qaT8Jl+Z876QJKM0WA/Yu1oZhwh69PLlfIV3r\nRtqgJYgVvXy9HTEtRkXAYjk2+JkxZJZqwymJxiv95j6ahxeO/PlGYzwVG1nHh7M8\n83e7+WaOubFa2BvanvCcBqXp2vzGwv/ZQjx5VfyTQQKBgQDrlij5ae3LrhUFzA7H\nEa1QEe0/disbLRm9cYt8NJYGE2m7Xtjslqdbhp5/xA4nEPoyCz5Fv4FiQmzJ6ENE\nfWmSAW6RDJhHaTwZVkyiCzwn2/I3h6dlKJG8b7FwOeYc2Rz6uIPv+nmpCUnl7mbD\nlkY1AXmBYRFDNyjNjfpcU/yhQQKBgQDbRC675fGYPOE4EmPPprSnf7hLEahAMQ/8\ndfISg4lUb88rhAFzqFvZM9bewePuWH5u0jwoDctx8xXaz/D2RaaVL7dJbfmITNVI\nxNVItwSkalGJ2BmWnmA2Qu/NICztD1Hnss7d2SlduI3lu/AxOHK7MAOFnk3LE5fN\n9eLz4eZpBwKBgQDNGKI9WOIj4z78GAV5e0M2JRU1nYuzkhUJn3M+w40kZvwymkUh\n25qBjPYp5yYnDpmyvaUOFcXvJEMPmDwPwVsKOGLotl1QNiaTLFV08XEChnIds+Sg\npawSr+569H0H+mBHSiHa52XJKoQCQAWJGyet98WvRDFCIiBMq+EdRiT2wQKBgQC+\nVg+jeFYiayauf/g4t2O2yv313FwLbQuNge0i+R/rNivGgI6qEYm5oHBzaigsLJGE\nLeeedWsXfYaJLVzky01xz7vxeA/Wq6uxwXvL5WOYPdqOKBL+Vnj6YVy82aNmHZhh\n4ywEFJD+FEjJFj3I3FFsAJ/uC59IG7f5R+s8/en/XQKBgQCmLcUWlrBJtWB5TocB\nbvgvBoGKXjZFdm+pzAL3C3n2RonC3iBO9Gk9KIDiHGWFgUs4pML4Jx2iA0+jK1pK\nFa29/UjcPhWv+As6f11osH3o2+OZQdrYLBM3tutlvFB4pPTtGIrADtMAUFUQMy5k\nzDNW9MODpyjuGEM3+2unF4ZLog==\n-----END PRIVATE KEY-----\n",
-      scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+       const serviceAccountAuth = new JWT({
+      email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+      key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
     });
 
     // Connessione al Google Sheet
