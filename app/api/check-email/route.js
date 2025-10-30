@@ -17,7 +17,6 @@ export async function POST(req) {
     }
 
     console.log("3. Configurazione JWT...");
-    // Configurazione JWT per l'autenticazione
     const serviceAccountAuth = new JWT({
       email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
       key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
@@ -25,7 +24,6 @@ export async function POST(req) {
     });
 
     console.log("4. Connessione a Google Sheet...");
-    // Connessione al Google Sheet
     const doc = new GoogleSpreadsheet(
       "1lffxEufNHZu6bH1b-Pw5ZHMU43B_oYMVdRgowjdx20s",
       serviceAccountAuth
