@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div className="flex flex-col lg:flex-row bg-home">
     
-      <div className="w-full lg:w-2/5 min-h-screen bg-gradient-to-br from-[#06000d] via-gray-950 to-gray-900 flex flex-col justify-center px-6 md:px-12 relative ">
+      <div className="w-full backdrop-blur-sm lg:w-2/5 min-h-screen bg-gradient-to-br from-[#06000d]/85 via-gray-950/85 to-gray-900/85 flex flex-col justify-center px-6 md:px-12 relative ">
 
         <div className="absolute top-8 left-[50%] md:top-6 translate-x-[-50%]">
           <Image

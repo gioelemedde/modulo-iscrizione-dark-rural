@@ -57,7 +57,7 @@ export default function EmailCheck({ onEmailVerified }) {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-gray-100/10 backdrop-blur-lg rounded-lg shadow-md p-6 shadow-violet-400">
+    <div className="max-w-md mx-auto bg-gray-100/10 backdrop-blur-lg rounded-lg shadow-md p-6 shadow-violet-400 mb-20">
       <h2 className="text-2xl font-bold text-center mb-6 text-white">
         Verifica Email
       </h2>

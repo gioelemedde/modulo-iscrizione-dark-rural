@@ -10,6 +10,8 @@ body {
   background-position: center right;
 }
 
+
+
 .bg-home {
   background: url(../img/bizio.jpg) ;
   background-size: cover !important;
@@ -17,6 +19,16 @@ body {
   background-repeat: no-repeat !important;
   background-position: center right !important;
   height: 100vh;
+}
+
+@media (max-width: 1023px) {
+  .bg-home {
+    background: linear-gradient(rgba(0, 0, 0, 0.614),rgba(0, 0, 0, 0.696)),url(../img/bizio.jpg) !important ;
+    background-size: cover !important ;
+    background-repeat: no-repeat !important;
+    background-position: center right !important  ;
+    height: 100vh;
+  }
 }
 
 html{

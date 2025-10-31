@@ -7,7 +7,7 @@ import EmailCheck from "../../components/EmailCheck";
 import { useRouter } from "next/navigation";
 
 export default function IscrizionePage() {
-  const [step, setStep] = useState(0); // Inizia con step 0 per verifica email
+  const [step, setStep] = useState(0);
   const router = useRouter();
   const [formData, setFormData] = useState({
     nome: "",
@@ -34,10 +34,10 @@ export default function IscrizionePage() {
     setStep(step - 1);
   };
 
-  // Funzione chiamata dopo la verifica email
+
   const handleEmailVerified = (verifiedEmail) => {
     setFormData({ ...formData, email: verifiedEmail });
-    setStep(1); // Vai al primo step del form
+    setStep(1);
   };
 
   const handleChange = (e) => {
@@ -115,12 +115,12 @@ export default function IscrizionePage() {
   return (
     <div className="container mx-auto px-4 py-8 text-white">
       {step === 0 ? (
-        // Step 0: Solo verifica email, layout semplice
+
         <div className="flex justify-center items-center min-h-screen">
           {renderStep()}
         </div>
       ) : (
-        // Steps 1-3: Layout completo con progress bar
+
         <div className="max-w-md mx-auto bg-gray-100/10 backdrop-blur-lg rounded-lg shadow-md p-6 shadow-[#9663b1] min-h-screen">
           <h1 className="text-2xl font-bold text-center mb-6 text-white">
             Iscrizione OBRESCENDI
