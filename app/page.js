@@ -20,11 +20,11 @@ export default function Home() {
  
         <div className="text-white mt-2 lg:mt-0 py-10">
           <h1 className="text-4xl  lg:text-5xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-violet-600 to-violet-400 bg-clip-text text-transparent">
-            Benvenuto in<br/>OBRESCENDI
+            Benvenutə in<br/>OBRESCENDI
           </h1>
 
           <p className="text-lg md:text-xl text-gray-300 mb-6 md:mb-8 leading-relaxed">
-            Diventa membro della nostra associazione per poter partecipare ai nostri eventi .
+            Diventa membrə della nostra associazione per poter partecipare ai nostri eventi .
           </p>
 
           <div className="space-y-4">
