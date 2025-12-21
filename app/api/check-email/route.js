@@ -18,7 +18,7 @@ async function registraAccesso(doc, email) {
     await accessiSheet.loadHeaderRow();
   }
   
-  const oggi = "23/12/2025"; // Data fissa evento
+  const dataEvento = "23/12/2025"; // Data fissa evento
   const timestamp = new Date().toISOString();
   
   // Carica le righe esistenti per verificare se l'email è già presente
@@ -34,10 +34,10 @@ async function registraAccesso(doc, email) {
   if (!accessoOggi) {
     await accessiSheet.addRow({
       Email: email,
-      Data: oggi,
+      Data: dataEvento,
       Timestamp: timestamp,
     });
-    console.log("Accesso registrato per:", email, "del giorno:", oggi);
+    console.log("Accesso registrato per:", email, "del giorno:", dataEvento);
   } else {
     console.log("Accesso già registrato oggi per:", email);
   }
@@ -116,12 +116,17 @@ export async function POST(req) {
     if (emailExists) {
       console.log("13. Email già registrata");
       
-      // Registra l'accesso nella tab "Accessi"
-      try {
-        await registraAccesso(doc, email);
-      } catch (accessError) {
-        console.error("Errore durante la registrazione dell'accesso:", accessError);
-        // Non blocchiamo il flusso principale se fallisce la registrazione dell'accesso
+      // Registra l'accesso nella tab "Accessi" SOLO se oggi è il 23/12/2025
+      const dataCorrente = new Date().toLocaleDateString("it-IT");
+      if (dataCorrente === "23/12/2025") {
+        try {
+          await registraAccesso(doc, email);
+        } catch (accessError) {
+          console.error("Errore durante la registrazione dell'accesso:", accessError);
+          // Non blocchiamo il flusso principale se fallisce la registrazione dell'accesso
+        }
+      } else {
+        console.log("Accesso non registrato: non è il 23/12/2025");
       }
       
       return new Response(
