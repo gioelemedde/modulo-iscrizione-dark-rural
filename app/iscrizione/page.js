@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import PersonalInfo from "../../components/PersonalInfo";
 import SignatureCanvas from "../../components/SignatureCanvas";
 import ReviewForm from "../../components/ReviewForm";
@@ -7,7 +8,9 @@ import EmailCheck from "../../components/EmailCheck";
 import { useRouter } from "next/navigation";
 
 export default function IscrizionePage() {
-  const [step, setStep] = useState(0);
+  const searchParams = useSearchParams();
+  const mode = searchParams.get('mode');
+  const [step, setStep] = useState(mode === 'iscriviti' ? 1 : 0);
   const router = useRouter();
   const [formData, setFormData] = useState({
     nome: "",

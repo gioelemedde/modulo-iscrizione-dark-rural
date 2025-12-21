@@ -3,6 +3,48 @@ import nodemailer from "nodemailer";
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { JWT } from "google-auth-library";
 
+// Funzione per registrare l'accesso nella tab "Accessi"
+async function registraAccesso(doc, email) {
+  console.log("Registrazione accesso per:", email);
+  
+  // Cerca il foglio "Accessi" o crealo se non esiste
+  let accessiSheet = doc.sheetsByTitle["Accessi"];
+  
+  if (!accessiSheet) {
+    console.log("Creazione foglio 'Accessi'...");
+    accessiSheet = await doc.addSheet({
+      title: "Accessi",
+      headerValues: ["Email", "Data", "Timestamp"],
+    });
+  } else {
+    await accessiSheet.loadHeaderRow();
+  }
+  
+  const oggi = "23/12/2025"; // Data fissa evento
+  const timestamp = new Date().toISOString();
+  
+  // Carica le righe esistenti per verificare se l'email è già presente
+  const rows = await accessiSheet.getRows();
+  
+  // Controlla se esiste già un record per questa email
+  const accessoOggi = rows.some(row => {
+    const rowEmail = (row.get('Email') || '').toLowerCase().trim();
+    return rowEmail === email.toLowerCase().trim();
+  });
+  
+  // Se non esiste già, aggiungilo
+  if (!accessoOggi) {
+    await accessiSheet.addRow({
+      Email: email,
+      Data: oggi,
+      Timestamp: timestamp,
+    });
+    console.log("Accesso registrato per:", email, "del giorno:", oggi);
+  } else {
+    console.log("Accesso già registrato oggi per:", email);
+  }
+}
+
 // Funzione per salvare i dati su Google Sheets
 async function saveToGoogleSheets(formData, matricola) {
   try {
@@ -104,6 +146,15 @@ async function saveToGoogleSheets(formData, matricola) {
     await sheet.addRow(rowData);
 
     console.log(`Dati salvati su Google Sheets per matricola: ${matricola}`);
+    
+    // Registra l'accesso nella tab "Accessi"
+    try {
+      await registraAccesso(doc, formData.email);
+    } catch (accessError) {
+      console.error("Errore durante la registrazione dell'accesso:", accessError);
+      // Non blocchiamo il flusso principale se fallisce la registrazione dell'accesso
+    }
+    
     return { success: true, matricola };
   } catch (error) {
     console.error("Errore nel salvataggio su Google Sheets:", error);

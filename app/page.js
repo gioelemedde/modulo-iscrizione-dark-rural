@@ -28,13 +28,18 @@ export default function Home() {
           </p>
 
           <div className="space-y-4">
-           
+            <Link
+              href="/iscrizione?mode=accedi"
+              className="block w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-3 md:py-4 px-6 md:px-8 rounded-lg transition-colors text-center text-base md:text-lg"
+            >
+              Verifica la tua iscrizione
+            </Link>
             
             <Link
-              href="/iscrizione"
-              className="block w-full border-2 border-violet-600 hover:bg-transparent bg-violet-600 hover:text-violet-600 text-white font-bold py-3 md:py-4 px-6 md:px-8 rounded-lg transition-colors text-center text-base md:text-lg"
+              href="/iscrizione?mode=iscriviti"
+              className="block w-full border-2 border-violet-600 hover:bg-violet-600 bg-transparent text-violet-600 hover:text-white font-bold py-3 md:py-4 px-6 md:px-8 rounded-lg transition-colors text-center text-base md:text-lg"
             >
-              Iscrizione
+              Iscriviti
             </Link> 
           </div>
         </div>
