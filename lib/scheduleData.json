@@ -154,7 +154,11 @@
         { "time": "19:00-20:00", "activity": "FOOD", "category": "food" },
         { "time": "20:00-21:00", "activity": "FOOD", "category": "food" },
         { "time": "21:00-22:00", "activity": "FOOD", "category": "food" },
-        { "time": "23:00-00:00", "activity": "ACCOGLIENZA", "category": "welcome" },
+        {
+          "time": "23:00-00:00",
+          "activity": "ACCOGLIENZA",
+          "category": "welcome"
+        },
         { "time": "00:00-01:00", "activity": "FOOD", "category": "food" },
         { "time": "03:00-04:00", "activity": "PULIZIA", "category": "pulizia" },
         { "time": "04:00-05:00", "activity": "PULIZIA", "category": "pulizia" }
@@ -303,7 +307,11 @@
         { "time": "19:00-20:00", "activity": "BAR", "category": "bar" },
         { "time": "20:00-21:00", "activity": "BAR", "category": "bar" },
         { "time": "21:00-22:00", "activity": "BAR", "category": "bar" },
-        { "time": "22:00-23:00", "activity": "ACCOGLIENZA", "category": "welcome" },
+        {
+          "time": "22:00-23:00",
+          "activity": "ACCOGLIENZA",
+          "category": "welcome"
+        },
         { "time": "00:00-01:00", "activity": "BAR", "category": "bar" },
         { "time": "01:00-02:00", "activity": "BAR", "category": "bar" },
         { "time": "03:00-04:00", "activity": "PULIZIA", "category": "pulizia" },
@@ -399,6 +407,54 @@
     },
     {
       "name": "Bilbo",
+      "tasks": [
+        {
+          "time": "13:00-14:00",
+          "activity": "RIUNIONE",
+          "category": "meeting"
+        },
+        { "time": "14:00-15:00", "activity": "ALL-MERCH", "category": "merch" },
+        { "time": "15:00-16:00", "activity": "ALL-MERCH", "category": "merch" },
+        { "time": "16:00-17:00", "activity": "ALL-MERCH", "category": "merch" },
+        { "time": "17:00-18:00", "activity": "ALL-BAND", "category": "band" },
+        { "time": "18:00-19:00", "activity": "BAND", "category": "band" },
+        { "time": "19:00-20:00", "activity": "BAND", "category": "band" },
+        { "time": "20:00-21:00", "activity": "PALCO", "category": "stage" },
+        { "time": "21:00-22:00", "activity": "MUSICA", "category": "music" },
+        { "time": "22:00-23:00", "activity": "MERCH", "category": "merch" },
+        { "time": "23:00-00:00", "activity": "MERCH", "category": "merch" },
+        { "time": "00:00-01:00", "activity": "MERCH", "category": "merch" },
+        { "time": "01:00-02:00", "activity": "JOLLY", "category": "jolly" },
+        { "time": "03:00-04:00", "activity": "PULIZIA", "category": "pulizia" },
+        { "time": "04:00-05:00", "activity": "PULIZIA", "category": "pulizia" }
+      ]
+    },
+    {
+      "name": "Barore",
+      "tasks": [
+        {
+          "time": "13:00-14:00",
+          "activity": "RIUNIONE",
+          "category": "meeting"
+        },
+        { "time": "14:00-15:00", "activity": "ALL-MERCH", "category": "merch" },
+        { "time": "15:00-16:00", "activity": "ALL-MERCH", "category": "merch" },
+        { "time": "16:00-17:00", "activity": "ALL-MERCH", "category": "merch" },
+        { "time": "17:00-18:00", "activity": "ALL-BAND", "category": "band" },
+        { "time": "18:00-19:00", "activity": "BAND", "category": "band" },
+        { "time": "19:00-20:00", "activity": "BAND", "category": "band" },
+        { "time": "20:00-21:00", "activity": "PALCO", "category": "stage" },
+        { "time": "21:00-22:00", "activity": "MUSICA", "category": "music" },
+        { "time": "22:00-23:00", "activity": "MERCH", "category": "merch" },
+        { "time": "23:00-00:00", "activity": "MERCH", "category": "merch" },
+        { "time": "00:00-01:00", "activity": "MERCH", "category": "merch" },
+        { "time": "01:00-02:00", "activity": "JOLLY", "category": "jolly" },
+        { "time": "03:00-04:00", "activity": "PULIZIA", "category": "pulizia" },
+        { "time": "04:00-05:00", "activity": "PULIZIA", "category": "pulizia" }
+      ]
+    },
+        {
+      "name": "Ilario",
       "tasks": [
         {
           "time": "13:00-14:00",
