@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import PersonalInfo from "../../components/PersonalInfo";
 import SignatureCanvas from "../../components/SignatureCanvas";
@@ -7,7 +7,7 @@ import ReviewForm from "../../components/ReviewForm";
 import EmailCheck from "../../components/EmailCheck";
 import { useRouter } from "next/navigation";
 
-export default function IscrizionePage() {
+function IscrizioneContent() {
   const searchParams = useSearchParams();
   const mode = searchParams.get('mode');
   const [step, setStep] = useState(mode === 'iscriviti' ? 1 : 0);
@@ -150,5 +150,17 @@ export default function IscrizionePage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function IscrizionePage() {
+  return (
+    <Suspense fallback={
+      <div className="container mx-auto px-4 py-8 text-white flex justify-center items-center min-h-screen">
+        <div className="text-center">Caricamento...</div>
+      </div>
+    }>
+      <IscrizioneContent />
+    </Suspense>
   );
 }
