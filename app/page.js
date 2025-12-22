@@ -37,7 +37,7 @@ export default function Home() {
             
             <Link
               href="/iscrizione?mode=iscriviti"
-              className="block w-full border-2 border-violet-600 hover:bg-violet-600 bg-transparent text-violet-600 hover:text-white font-bold py-3 md:py-4 px-6 md:px-8 rounded-lg transition-colors text-center text-base md:text-lg"
+              className="block w-full border-2 border-violet-600 bg-transparent text-violet-600  font-bold py-3 md:py-4 px-6 md:px-8 rounded-lg transition-colors text-center text-base md:text-lg"
             >
               Iscriviti
             </Link> 
