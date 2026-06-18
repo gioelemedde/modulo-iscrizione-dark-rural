@@ -16,25 +16,14 @@ const EditableScheduleCell = ({
   const [selectedActivity, setSelectedActivity] = useState('');
   const [availableActivities, setAvailableActivities] = useState([]);
 
-  // Estrai tutte le attività per ogni categoria dal dataset
+  // Legge le attività SOLO da scheduleData.activities (fonte unica di verità)
   const getCategoryActivities = () => {
-    const categoryActivities = {};
-    
-    scheduleData.schedule.forEach(person => {
-      person.tasks.forEach(task => {
-        if (!categoryActivities[task.category]) {
-          categoryActivities[task.category] = new Set();
-        }
-        categoryActivities[task.category].add(task.activity);
-      });
+    const base = scheduleData.activities ?? {};
+    const result = {};
+    Object.entries(base).forEach(([cat, acts]) => {
+      result[cat] = [...acts].sort();
     });
-
-    // Converti Set in Array e ordina
-    Object.keys(categoryActivities).forEach(cat => {
-      categoryActivities[cat] = Array.from(categoryActivities[cat]).sort();
-    });
-
-    return categoryActivities;
+    return result;
   };
 
   const categoryActivities = getCategoryActivities();
@@ -51,9 +40,7 @@ const EditableScheduleCell = ({
   const handleEdit = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    
     if (!isEditMode) return;
-    
     if (currentTask) {
       setSelectedCategory(currentTask.category);
       setSelectedActivity(currentTask.activity);
@@ -66,13 +53,11 @@ const EditableScheduleCell = ({
 
   const handleSave = () => {
     if (selectedCategory && selectedActivity) {
-      // Salva il task selezionato
       onTaskChange(person.name, timeSlot, {
         category: selectedCategory,
         activity: selectedActivity
       });
     } else {
-      // Rimuovi task se categoria vuota o nessuna attività selezionata
       onTaskChange(person.name, timeSlot, null);
     }
     setIsEditing(false);
@@ -93,7 +78,7 @@ const EditableScheduleCell = ({
   const handleCategoryChange = (e) => {
     const newCategory = e.target.value;
     setSelectedCategory(newCategory);
-    setSelectedActivity(''); // Reset attività quando cambia categoria
+    setSelectedActivity('');
   };
 
   const categoryInfo = currentTask ? categories[currentTask.category] : null;
@@ -102,8 +87,7 @@ const EditableScheduleCell = ({
     return (
       <td className="border border-gray-500 px-2 py-2 bg-gray-600">
         <div className="space-y-2">
-          {/* Selezione categoria */}
-          <select 
+          <select
             value={selectedCategory}
             onChange={handleCategoryChange}
             className="w-full text-xs bg-gray-700 text-white border border-gray-500 rounded px-1 py-1"
@@ -114,9 +98,8 @@ const EditableScheduleCell = ({
             ))}
           </select>
 
-          {/* Selezione attività (appare solo dopo aver scelto categoria) */}
           {selectedCategory && availableActivities.length > 0 && (
-            <select 
+            <select
               value={selectedActivity}
               onChange={(e) => setSelectedActivity(e.target.value)}
               className="w-full text-xs bg-gray-700 text-white border border-gray-500 rounded px-1 py-1"
@@ -128,30 +111,28 @@ const EditableScheduleCell = ({
             </select>
           )}
 
-          {/* Messaggio se non ci sono attività */}
           {selectedCategory && availableActivities.length === 0 && (
             <div className="text-xs text-gray-400 p-1">
               Nessuna attività disponibile
             </div>
           )}
 
-          {/* Pulsanti azione */}
           <div className="flex gap-1">
-            <button 
+            <button
               onClick={handleSave}
               className="flex-1 bg-green-600 hover:bg-green-700 text-white text-xs px-1 py-1 rounded"
               title={!selectedCategory ? "Salva cella vuota" : "Salva turno"}
             >
               ✓
             </button>
-            <button 
+            <button
               onClick={handleCancel}
               className="flex-1 bg-gray-600 hover:bg-gray-700 text-white text-xs px-1 py-1 rounded"
             >
               ✕
             </button>
             {currentTask && (
-              <button 
+              <button
                 onClick={handleRemove}
                 className="flex-1 bg-red-600 hover:bg-red-700 text-white text-xs px-1 py-1 rounded"
                 title="Rimuovi turno"
@@ -165,10 +146,10 @@ const EditableScheduleCell = ({
     );
   }
 
-  // Modalità visualizzazione
+  // Modalità visualizzazione — cella vuota
   if (!currentTask) {
     return (
-      <td 
+      <td
         className={`border border-gray-500 px-2 py-2 text-center ${
           isEditMode ? 'cursor-pointer hover:bg-gray-600' : ''
         }`}
@@ -181,6 +162,7 @@ const EditableScheduleCell = ({
     );
   }
 
+  // Modalità visualizzazione — cella con task
   return (
     <td
       className={`border border-gray-500 px-2 py-2 text-center ${
@@ -192,9 +174,7 @@ const EditableScheduleCell = ({
       {isEditMode ? (
         <div className="text-white text-xs font-semibold">
           {currentTask.activity}
-          <div className="text-xs opacity-75 mt-1">
-            ✏️ Modifica
-          </div>
+          <div className="text-xs opacity-75 mt-1">✏️ Modifica</div>
         </div>
       ) : (
         <Link
