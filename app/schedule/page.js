@@ -168,7 +168,7 @@ const ScheduleOverview = () => {
               👥 Aggiungi/Rimuovi Persone
             </h2>
 
-            <form onSubmit={handleAddPerson} className="flex gap-3 mb-4">
+            <form onSubmit={handleAddPerson} className="flex flex-wrap gap-3 mb-4">
               <input
                 type="text"
                 value={newPersonName}
