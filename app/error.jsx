@@ -6,14 +6,14 @@ export default function Error() {
     return (
       <div className="text-center p-10 h-screen flex justify-center items-center flex-col">
         <h1 className="text-6xl font-bold text-violet-700">OPS</h1>
-        <h2 className="text-2xl font-bold">Qualcosa e' andato storto </h2>
+        <h2 className="text-2xl font-bold">Qualcosa e&apos; andato storto </h2>
         <Image
-                  src="@/img/bizio2.jpg" 
+                  src="/img/bizio2.jpg" 
                   alt="locandina" 
                   width={400} 
                   height={400} 
         />
-         <p className="mt-4">Consolati con un'immagine del presidente </p>
+         <p className="mt-4">Consolati con un&apos;immagine del presidente </p>
       </div>
     );
   }

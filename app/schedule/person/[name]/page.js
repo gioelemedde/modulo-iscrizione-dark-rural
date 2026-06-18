@@ -1,4 +1,3 @@
-
 'use client';
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -15,7 +14,6 @@ const PersonSchedule = () => {
     error 
   } = useFirebaseSchedule();
 
-  // Loading state
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 p-8 flex items-center justify-center">
@@ -27,7 +25,6 @@ const PersonSchedule = () => {
     );
   }
 
-  // Error state
   if (error) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 p-8 flex items-center justify-center">
@@ -45,7 +42,6 @@ const PersonSchedule = () => {
     );
   }
 
-  // No data state
   if (!scheduleData) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 p-8 flex items-center justify-center">
@@ -81,6 +77,27 @@ const PersonSchedule = () => {
     );
   }
 
+  // Persona trovata ma senza task
+  if (!person.tasks || person.tasks.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 p-8 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-6xl mb-6">📭</div>
+          <h1 className="text-3xl font-bold text-white mb-2">{person.name}</h1>
+          <p className="text-gray-400 text-lg mb-6">
+            Nessun turno associato a questa persona.
+          </p>
+          <Link
+            href="/schedule"
+            className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
+          >
+            ← Torna alla vista completa
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 p-8">
       <div className="max-w-4xl mx-auto">
@@ -99,49 +116,49 @@ const PersonSchedule = () => {
         <div className="bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-2xl overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[425px]">
-            <thead>
-              <tr className="bg-violet-800">
-                <th className="border border-gray-500 px-6 py-4 text-white font-bold text-left">
-                  Orario
-                </th>
-                <th className="border border-gray-500 px-6 py-4 text-white font-bold text-left">
-                  Attività
-                </th>
-                <th className="border border-gray-500 px-6 py-4 text-white font-bold text-left">
-                  Categoria
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {person.tasks.map((task, index) => {
-                const categoryInfo = scheduleData.categories[task.category];
-                return (
-                  <tr
-                    key={index}
-                    className="hover:bg-gray-700/50 transition-colors"
-                  >
-                    <td className="border border-gray-500 px-6 py-4 text-white font-semibold">
-                      {task.time}
-                    </td>
-                    <td
-                      className="border border-gray-500 px-6 py-4 text-white font-bold"
-                      style={{ backgroundColor: categoryInfo?.color }}
+              <thead>
+                <tr className="bg-violet-800">
+                  <th className="border border-gray-500 px-6 py-4 text-white font-bold text-left">
+                    Orario
+                  </th>
+                  <th className="border border-gray-500 px-6 py-4 text-white font-bold text-left">
+                    Attività
+                  </th>
+                  <th className="border border-gray-500 px-6 py-4 text-white font-bold text-left">
+                    Categoria
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {person.tasks.map((task, index) => {
+                  const categoryInfo = scheduleData.categories[task.category];
+                  return (
+                    <tr
+                      key={index}
+                      className="hover:bg-gray-700/50 transition-colors"
                     >
-                      {task.activity}
-                    </td>
-                    <td className="border border-gray-500 px-6 py-4">
-                      <Link
-                        href={`/schedule/category/${task.category}`}
-                        className="text-gray-300 hover:text-white underline"
+                      <td className="border border-gray-500 px-6 py-4 text-white font-semibold">
+                        {task.time}
+                      </td>
+                      <td
+                        className="border border-gray-500 px-6 py-4 text-white font-bold"
+                        style={{ backgroundColor: categoryInfo?.color }}
                       >
-                        {categoryInfo?.label}
-                      </Link>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                        {task.activity}
+                      </td>
+                      <td className="border border-gray-500 px-6 py-4">
+                        <Link
+                          href={`/schedule/category/${task.category}`}
+                          className="text-gray-300 hover:text-white underline"
+                        >
+                          {categoryInfo?.label}
+                        </Link>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         </div>
 

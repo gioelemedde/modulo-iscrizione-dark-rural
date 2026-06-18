@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
-import { readScheduleData, saveScheduleData, listenToScheduleChanges } from '@/lib/dataManager';
+import { readScheduleData, saveScheduleData, listenToScheduleChanges, addPersonToSchedule, removePersonFromSchedule } from '@/lib/dataManager';
 
 export function useFirebaseSchedule() {
   const [scheduleData, setScheduleData] = useState(null);
@@ -58,6 +58,12 @@ export function useFirebaseSchedule() {
       if (personIndex === -1) return;
 
       const person = updatedData.schedule[personIndex];
+      
+      // Assicurati che tasks sia un array
+      if (!person.tasks || !Array.isArray(person.tasks)) {
+        person.tasks = [];
+      }
+      
       const taskIndex = person.tasks.findIndex(t => t.time === timeSlot);
       
       if (newTask) {
@@ -103,7 +109,36 @@ export function useFirebaseSchedule() {
 
   // Utilità per ottenere un task specifico
   const getTaskForTimeSlot = useCallback((personTasks, timeSlot) => {
+    if (!personTasks || !Array.isArray(personTasks)) return undefined;
     return personTasks.find(task => task.time === timeSlot);
+  }, []);
+
+  // Aggiunge una nuova persona allo schedule
+  const addPerson = useCallback(async (name) => {
+    try {
+      setSaving(true);
+      await addPersonToSchedule(name);
+      return true;
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    } finally {
+      setSaving(false);
+    }
+  }, []);
+
+  // Rimuove una persona dallo schedule
+  const removePerson = useCallback(async (name) => {
+    try {
+      setSaving(true);
+      await removePersonFromSchedule(name);
+      return true;
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    } finally {
+      setSaving(false);
+    }
   }, []);
 
   return {
@@ -113,6 +148,8 @@ export function useFirebaseSchedule() {
     saving,
     updatePersonTask,
     saveAllData,
-    getTaskForTimeSlot
+    getTaskForTimeSlot,
+    addPerson,
+    removePerson
   };
 }
