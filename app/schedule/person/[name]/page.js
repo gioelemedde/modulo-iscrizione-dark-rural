@@ -4,14 +4,51 @@ import { useParams } from "next/navigation";
 import React from "react";
 import { useFirebaseSchedule } from "@/hooks/useFirebaseSchedule";
 
+
+const DAY_START_THRESHOLD_MINUTES = 6 * 60; // 06:00
+
+
+const getSortableMinutes = (timeRange) => {
+  if (!timeRange || typeof timeRange !== "string") return 0;
+
+  const startTime = timeRange.split("-")[0]?.trim(); 
+  if (!startTime) return 0;
+
+  const [hoursStr, minutesStr] = startTime.split(":");
+  const hours = parseInt(hoursStr, 10);
+  const minutes = parseInt(minutesStr, 10);
+
+  if (Number.isNaN(hours) || Number.isNaN(minutes)) return 0;
+
+  let totalMinutes = hours * 60 + minutes;
+
+  if (totalMinutes < DAY_START_THRESHOLD_MINUTES) {
+    totalMinutes += 24 * 60;
+  }
+
+  return totalMinutes;
+};
+
+
+const sortTasksByTime = (tasks) => {
+  return [...tasks]
+    .map((task, originalIndex) => ({ task, originalIndex }))
+    .sort((a, b) => {
+      const diff = getSortableMinutes(a.task.time) - getSortableMinutes(b.task.time);
+      if (diff !== 0) return diff;
+      return a.originalIndex - b.originalIndex;
+    })
+    .map(({ task }) => task);
+};
+
 const PersonSchedule = () => {
   const params = useParams();
   const name = params.name;
-  
-  const { 
-    scheduleData, 
-    loading, 
-    error 
+
+  const {
+    scheduleData,
+    loading,
+    error
   } = useFirebaseSchedule();
 
   if (loading) {
@@ -31,7 +68,7 @@ const PersonSchedule = () => {
         <div className="text-center">
           <h2 className="text-2xl font-bold text-red-500 mb-4">Errore Firebase</h2>
           <p className="text-gray-300 mb-4">{error}</p>
-          <button 
+          <button
             onClick={() => window.location.reload()}
             className="bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded"
           >
@@ -98,6 +135,11 @@ const PersonSchedule = () => {
     );
   }
 
+  // Fix: ordino i turni in ordine cronologico reale prima di renderizzarli,
+  // gestendo correttamente i turni che attraversano la mezzanotte
+  // (es. 23:00-00:00, 00:00-01:00, 02:00-03:00 vanno dopo 20:00-21:00).
+  const sortedTasks = sortTasksByTime(person.tasks);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 p-8">
       <div className="max-w-4xl mx-auto">
@@ -130,11 +172,11 @@ const PersonSchedule = () => {
                 </tr>
               </thead>
               <tbody>
-                {person.tasks.map((task, index) => {
+                {sortedTasks.map((task, index) => {
                   const categoryInfo = scheduleData.categories[task.category];
                   return (
                     <tr
-                      key={index}
+                      key={`${task.time}-${task.category}-${index}`}
                       className="hover:bg-gray-700/50 transition-colors"
                     >
                       <td className="border border-gray-500 px-6 py-4 text-white font-semibold">
