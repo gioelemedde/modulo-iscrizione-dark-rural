@@ -68,7 +68,7 @@ const CategorySchedule = () => {
   const peopleWithCategory = scheduleData.schedule
     .map((person) => ({
       name: person.name,
-      tasks: person.tasks.filter((task) => task.category === category),
+      tasks: (person.tasks || []).filter((task) => task.category === category),
     }))
     .filter((person) => person.tasks.length > 0);
 
