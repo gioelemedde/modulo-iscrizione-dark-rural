@@ -13,7 +13,7 @@ async function verifyCaptcha(token) {
     console.error("RECAPTCHA_SECRET_KEY non configurata: submit-form bloccato.");
     return false;
   }
-  const res = await fetch("https://www.googleapis.com/recaptcha/api/siteverify", {
+  const res = await fetch("https://www.google.com/recaptcha/api/siteverify", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({ secret, response: token }),
