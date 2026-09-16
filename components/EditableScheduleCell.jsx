@@ -1,15 +1,16 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 
-const EditableScheduleCell = ({ 
-  person, 
-  timeSlot, 
-  currentTask, 
-  categories, 
+const EditableScheduleCell = ({
+  person,
+  timeSlot,
+  currentTask,
+  categories,
   scheduleData,
   onTaskChange,
-  isEditMode 
+  isEditMode,
+  saving
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -17,16 +18,14 @@ const EditableScheduleCell = ({
   const [availableActivities, setAvailableActivities] = useState([]);
 
   // Legge le attività SOLO da scheduleData.activities (fonte unica di verità)
-  const getCategoryActivities = () => {
+  const categoryActivities = useMemo(() => {
     const base = scheduleData.activities ?? {};
     const result = {};
     Object.entries(base).forEach(([cat, acts]) => {
       result[cat] = [...acts].sort();
     });
     return result;
-  };
-
-  const categoryActivities = getCategoryActivities();
+  }, [scheduleData.activities]);
 
   // Aggiorna le attività disponibili quando cambia la categoria
   useEffect(() => {
@@ -35,7 +34,7 @@ const EditableScheduleCell = ({
     } else {
       setAvailableActivities([]);
     }
-  }, [selectedCategory]);
+  }, [selectedCategory, categoryActivities]);
 
   const handleEdit = (e) => {
     e.preventDefault();
@@ -120,21 +119,24 @@ const EditableScheduleCell = ({
           <div className="flex gap-1">
             <button
               onClick={handleSave}
-              className="flex-1 bg-green-600 hover:bg-green-700 text-white text-xs px-1 py-1 rounded"
+              disabled={saving}
+              className="flex-1 bg-green-600 hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs px-1 py-1 rounded"
               title={!selectedCategory ? "Salva cella vuota" : "Salva turno"}
             >
               ✓
             </button>
             <button
               onClick={handleCancel}
-              className="flex-1 bg-gray-600 hover:bg-gray-700 text-white text-xs px-1 py-1 rounded"
+              disabled={saving}
+              className="flex-1 bg-gray-600 hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs px-1 py-1 rounded"
             >
               ✕
             </button>
             {currentTask && (
               <button
                 onClick={handleRemove}
-                className="flex-1 bg-red-600 hover:bg-red-700 text-white text-xs px-1 py-1 rounded"
+                disabled={saving}
+                className="flex-1 bg-red-600 hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs px-1 py-1 rounded"
                 title="Rimuovi turno"
               >
                 🗑️

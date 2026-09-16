@@ -25,6 +25,7 @@ function IscrizioneContent() {
     luogoFirma: "",
     dataFirma: "",
     firma: null,
+    captchaToken: null,
   });
 
   const [loading, setLoading] = useState(false); 

@@ -3,43 +3,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import React from "react";
 import { useFirebaseSchedule } from "@/hooks/useFirebaseSchedule";
-
-
-const DAY_START_THRESHOLD_MINUTES = 6 * 60; // 06:00
-
-
-const getSortableMinutes = (timeRange) => {
-  if (!timeRange || typeof timeRange !== "string") return 0;
-
-  const startTime = timeRange.split("-")[0]?.trim(); 
-  if (!startTime) return 0;
-
-  const [hoursStr, minutesStr] = startTime.split(":");
-  const hours = parseInt(hoursStr, 10);
-  const minutes = parseInt(minutesStr, 10);
-
-  if (Number.isNaN(hours) || Number.isNaN(minutes)) return 0;
-
-  let totalMinutes = hours * 60 + minutes;
-
-  if (totalMinutes < DAY_START_THRESHOLD_MINUTES) {
-    totalMinutes += 24 * 60;
-  }
-
-  return totalMinutes;
-};
-
-
-const sortTasksByTime = (tasks) => {
-  return [...tasks]
-    .map((task, originalIndex) => ({ task, originalIndex }))
-    .sort((a, b) => {
-      const diff = getSortableMinutes(a.task.time) - getSortableMinutes(b.task.time);
-      if (diff !== 0) return diff;
-      return a.originalIndex - b.originalIndex;
-    })
-    .map(({ task }) => task);
-};
+import { sortTasksByTime } from "@/lib/scheduleTime";
 
 const PersonSchedule = () => {
   const params = useParams();

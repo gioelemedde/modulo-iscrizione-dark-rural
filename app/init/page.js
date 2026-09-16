@@ -8,9 +8,17 @@ export default function InitPage() {
   const [error, setError] = useState(null);
 
   const handleInitialize = async () => {
+    if (
+      !window.confirm(
+        'Questa operazione SOVRASCRIVERÀ tutti i dati dei turni attualmente su Firebase. Sei sicuro di voler continuare?'
+      )
+    ) {
+      return;
+    }
+
     setLoading(true);
     setError(null);
-    
+
     try {
       await initializeFirebaseData();
       setSuccess(true);

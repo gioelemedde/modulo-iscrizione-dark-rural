@@ -251,7 +251,7 @@ const ScheduleOverview = () => {
                         </span>
                       ) : (
                         <Link
-                          href={`/schedule/person/${person.name}`}
+                          href={`/schedule/person/${encodeURIComponent(person.name)}`}
                           className="hover:text-gray-300 underline"
                         >
                           {person.name}
@@ -270,6 +270,7 @@ const ScheduleOverview = () => {
                           scheduleData={scheduleData}
                           onTaskChange={handleTaskChange}
                           isEditMode={isEditMode}
+                          saving={saving}
                         />
                       );
                     })}

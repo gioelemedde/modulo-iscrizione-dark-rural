@@ -8,9 +8,14 @@ const SignatureCanvas = ({ nextStep, prevStep, handleSignature }) => {
   const clear = () => {
     sigCanvas.current.clear();
     setImageURL(null);
+    handleSignature(null);
   };
-  
+
   const save = () => {
+    if (sigCanvas.current.isEmpty()) {
+      alert('Il riquadro è vuoto: disegna la tua firma prima di salvare.');
+      return;
+    }
     const signatureData = sigCanvas.current.toDataURL('image/png');
     setImageURL(signatureData);
     handleSignature(signatureData);

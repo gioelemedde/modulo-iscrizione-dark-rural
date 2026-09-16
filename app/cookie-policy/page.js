@@ -7,7 +7,7 @@ export default function CookiePolicy() {
           Nessun dato viene memorizzato o utilizzato per scopi di marketing o profilazione.
         </p>
         <p className="mb-4">
-          L'accettazione dei cookie permette il corretto funzionamento del modulo. In caso di rifiuto, alcune funzionalità potrebbero non essere disponibili.
+          L&apos;accettazione dei cookie permette il corretto funzionamento del modulo. In caso di rifiuto, alcune funzionalità potrebbero non essere disponibili.
         </p>
       </main>
     );

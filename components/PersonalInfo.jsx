@@ -1,19 +1,26 @@
 import Link from "next/link";
 import React, { useState, useRef } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
+import { isValidEmail } from "@/lib/validation";
 
 const PersonalInfo = ({ nextStep, handleChange, values }) => {
   const [captchaValue, setCaptchaValue] = useState(null);
   const recaptchaRef = useRef(null);
 
-  const isValidEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
   const isFormValid = () => {
-    const { nome, email, consensoDati, cognome } = values;
-    return nome && email && cognome && isValidEmail(email) && consensoDati && captchaValue;
+    const { nome, email, consensoDati, cognome, luogoNascita, dataNascita, comune, indirizzo } = values;
+    return (
+      nome &&
+      email &&
+      cognome &&
+      isValidEmail(email) &&
+      consensoDati &&
+      captchaValue &&
+      luogoNascita &&
+      dataNascita &&
+      comune &&
+      indirizzo
+    );
   };
 
   const continua = (e) => {
@@ -35,10 +42,12 @@ const PersonalInfo = ({ nextStep, handleChange, values }) => {
 
   const handleCaptchaChange = (value) => {
     setCaptchaValue(value);
+    handleChange({ target: { name: "captchaToken", value } });
   };
 
   const handleCaptchaExpired = () => {
     setCaptchaValue(null);
+    handleChange({ target: { name: "captchaToken", value: null } });
   };
 
   return (
@@ -276,7 +285,10 @@ const PersonalInfo = ({ nextStep, handleChange, values }) => {
         </div>
       </div>
 
-      {/* reCAPTCHA */}
+      {/* reCAPTCHA — questa site key (e la secret key server-side in .env.local /
+          RECAPTCHA_SECRET_KEY) sono registrate sul sito reCAPTCHA che sta sotto
+          l'account Google PERSONALE, non sotto l'account "dark rural". Domini
+          autorizzati: dark-rural.vercel.app, modulo-iscrizione-dark-rural.vercel.app */}
       <div className="mb-6">
         <label className="block text-white text-sm font-bold mb-2">
           Verifica che sei umano

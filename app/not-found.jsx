@@ -1,9 +1,6 @@
-"use client"
-
 import Image from "next/image";
 import Link from "next/link";
 
-// app/not-found.tsx
 export default function NotFound() {
     return (
       <div className="text-center p-10 h-screen flex justify-center items-center flex-col">

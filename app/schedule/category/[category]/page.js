@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import React from "react";
 import { useFirebaseSchedule } from "@/hooks/useFirebaseSchedule";
+import { getSortableMinutes } from "@/lib/scheduleTime";
 
 const CategorySchedule = () => {
   const params = useParams();
@@ -102,22 +103,8 @@ const CategorySchedule = () => {
   });
 
 
-  const timeToMinutes = (timeStr) => {
-
-    const startTime = timeStr.split('-')[0];
-    const [hours, minutes] = startTime.split(':').map(Number);
-    let totalMinutes = hours * 60 + minutes;
-    
-
-    if (hours >= 0 && hours < 6) {
-      totalMinutes += 24 * 60;
-    }
-    
-    return totalMinutes;
-  };
-
   const sortedTimes = Object.keys(tasksByTime).sort((a, b) => {
-    return timeToMinutes(a) - timeToMinutes(b);
+    return getSortableMinutes(a) - getSortableMinutes(b);
   });
 
   return (
@@ -173,7 +160,7 @@ const CategorySchedule = () => {
                       {tasksByTime[time].map((person, idx) => (
                         <Link
                           key={idx}
-                          href={`/schedule/person/${person.name}`}
+                          href={`/schedule/person/${encodeURIComponent(person.name)}`}
                           className="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded-full text-sm font-semibold transition-colors"
                         >
                           {person.name}
@@ -255,12 +242,14 @@ const CategorySchedule = () => {
             <div className="bg-gray-700/70 rounded p-4">
               <p className="text-gray-300 text-sm">Media Persone/Ora</p>
               <p className="text-white text-3xl font-bold">
-                {(
-                  peopleWithCategory.reduce(
-                    (acc, person) => acc + person.tasks.length,
-                    0
-                  ) / sortedTimes.length
-                ).toFixed(1)}
+                {sortedTimes.length > 0
+                  ? (
+                      peopleWithCategory.reduce(
+                        (acc, person) => acc + person.tasks.length,
+                        0
+                      ) / sortedTimes.length
+                    ).toFixed(1)
+                  : "0.0"}
               </p>
             </div>
           </div>

@@ -1,66 +1,31 @@
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import nodemailer from "nodemailer";
-import { GoogleSpreadsheet } from "google-spreadsheet";
-import { JWT } from "google-auth-library";
+import { getMembersSheetDoc, registraAccesso, sanitizeForSheets } from "@/lib/googleSheets";
+import { isWithinEventWindow } from "@/lib/eventWindow";
+import { isValidEmail } from "@/lib/validation";
 
-// Funzione per registrare l'accesso nella tab "Accessi"
-async function registraAccesso(doc, email) {
-  console.log("Registrazione accesso per:", email);
-  
-  // Cerca il foglio "Accessi" o crealo se non esiste
-  let accessiSheet = doc.sheetsByTitle["Accessi"];
-  
-  if (!accessiSheet) {
-    console.log("Creazione foglio 'Accessi'...");
-    accessiSheet = await doc.addSheet({
-      title: "Accessi",
-      headerValues: ["Email", "Data", "Timestamp"],
-    });
-  } else {
-    await accessiSheet.loadHeaderRow();
+// Verifica server-side del token reCAPTCHA (il widget client-side da solo non protegge nulla:
+// il token va confermato con Google prima di fidarsi della richiesta).
+async function verifyCaptcha(token) {
+  if (!token) return false;
+  const secret = process.env.RECAPTCHA_SECRET_KEY;
+  if (!secret) {
+    console.error("RECAPTCHA_SECRET_KEY non configurata: submit-form bloccato.");
+    return false;
   }
-  
-  const dataEvento = "23/12/2025"; // Data fissa evento
-  const timestamp = new Date().toISOString();
-  
-  // Carica le righe esistenti per verificare se l'email è già presente
-  const rows = await accessiSheet.getRows();
-  
-  // Controlla se esiste già un record per questa email
-  const accessoOggi = rows.some(row => {
-    const rowEmail = (row.get('Email') || '').toLowerCase().trim();
-    return rowEmail === email.toLowerCase().trim();
+  const res = await fetch("https://www.googleapis.com/recaptcha/api/siteverify", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({ secret, response: token }),
   });
-  
-  // Se non esiste già, aggiungilo
-  if (!accessoOggi) {
-    await accessiSheet.addRow({
-      Email: email,
-      Data: dataEvento,
-      Timestamp: timestamp,
-    });
-    console.log("Accesso registrato per:", email, "del giorno:", dataEvento);
-  } else {
-    console.log("Accesso già registrato oggi per:", email);
-  }
+  const data = await res.json();
+  return data.success === true;
 }
 
 // Funzione per salvare i dati su Google Sheets
 async function saveToGoogleSheets(formData, matricola) {
   try {
-    // Configurazione JWT per l'autenticazione
-       const serviceAccountAuth = new JWT({
-      email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-      key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
-      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-    });
-
-    // Connessione al Google Sheet
-    const doc = new GoogleSpreadsheet(
-      "1lffxEufNHZu6bH1b-Pw5ZHMU43B_oYMVdRgowjdx20s",
-      serviceAccountAuth
-    );
-    await doc.loadInfo();
+    const doc = await getMembersSheetDoc();
 
     // Cerca il foglio "Iscritti" o crealo se non esiste
     let sheet = doc.sheetsByTitle["Iscritti"];
@@ -123,19 +88,19 @@ async function saveToGoogleSheets(formData, matricola) {
     const rowData = {
       Matricola: matricola,
       "Data Iscrizione": new Date().toLocaleDateString("it-IT"),
-      Nome: formData.nome || "",
-      Cognome: formData.cognome || "",
+      Nome: sanitizeForSheets(formData.nome || ""),
+      Cognome: sanitizeForSheets(formData.cognome || ""),
       Genere: formData.genere || "",
       "Data di Nascita": formData.dataNascita
         ? formatDate(formData.dataNascita)
         : "",
-      "Luogo di Nascita": formData.luogoNascita || "",
-      "Comune di Residenza": formData.comune || "",
-      Indirizzo: formData.indirizzo || "",
+      "Luogo di Nascita": sanitizeForSheets(formData.luogoNascita || ""),
+      "Comune di Residenza": sanitizeForSheets(formData.comune || ""),
+      Indirizzo: sanitizeForSheets(formData.indirizzo || ""),
       Cellulare: formData.cellulare || "",
       Email: formData.email || "",
-      Professione: formData.professione || "",
-      "Luogo Firma": formData.luogoFirma || formData.comune || "",
+      Professione: sanitizeForSheets(formData.professione || ""),
+      "Luogo Firma": sanitizeForSheets(formData.luogoFirma || formData.comune || ""),
       "Data Firma": formData.dataFirma
         ? formatDate(formData.dataFirma)
         : formatDate(new Date().toISOString().split("T")[0]),
@@ -145,21 +110,15 @@ async function saveToGoogleSheets(formData, matricola) {
     // Aggiungi la riga al foglio
     await sheet.addRow(rowData);
 
-    console.log(`Dati salvati su Google Sheets per matricola: ${matricola}`);
-    
-    // Registra l'accesso nella tab "Accessi" SOLO se oggi è il 23/12/2025
-    const dataCorrente = new Date().toLocaleDateString("it-IT");
-    if (dataCorrente === "23/12/2025") {
+    if (isWithinEventWindow()) {
       try {
         await registraAccesso(doc, formData.email);
       } catch (accessError) {
         console.error("Errore durante la registrazione dell'accesso:", accessError);
         // Non blocchiamo il flusso principale se fallisce la registrazione dell'accesso
       }
-    } else {
-      console.log("Accesso non registrato: non è il 23/12/2025");
     }
-    
+
     return { success: true, matricola };
   } catch (error) {
     console.error("Errore nel salvataggio su Google Sheets:", error);
@@ -167,9 +126,17 @@ async function saveToGoogleSheets(formData, matricola) {
   }
 }
 
-// Funzione di utilità per formattare le date
+// Funzione di utilità per formattare le date. Parsa "YYYY-MM-DD" (formato di
+// <input type="date">) direttamente con una regex invece di passare per
+// new Date(), che interpreta la stringa come UTC e può far slittare la data
+// di un giorno a seconda del fuso orario del server.
 function formatDate(dateString) {
   if (!dateString) return "";
+  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(dateString);
+  if (match) {
+    const [, y, m, d] = match;
+    return `${d}/${m}/${y}`;
+  }
   try {
     const date = new Date(dateString);
     return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
@@ -182,6 +149,20 @@ function formatDate(dateString) {
 export async function POST(req) {
   try {
     const formData = await req.json();
+
+    if (!formData.nome || !formData.cognome || !isValidEmail(formData.email)) {
+      return new Response(
+        JSON.stringify({ message: "Dati mancanti o non validi" }),
+        { status: 400 }
+      );
+    }
+
+    if (!(await verifyCaptcha(formData.captchaToken))) {
+      return new Response(
+        JSON.stringify({ message: "Verifica captcha non superata" }),
+        { status: 400 }
+      );
+    }
 
     const pdfDoc = await PDFDocument.create();
     const page = pdfDoc.addPage([595.28, 841.89]);
@@ -222,10 +203,13 @@ export async function POST(req) {
       font,
     });
 
-    let genere = formData.genere || "o";
-
+    // ponytail: troncamento invece di text-wrapping vero (font.widthOfTextAtSize) —
+    // sufficiente a evitare che un valore lunghissimo esca dal bordo della pagina.
+    const MAX_FIELD_LENGTH = 50;
     const getValueOrUnderscore = (value, length = 15) =>
-      value && value.trim() !== "" ? value : "_".repeat(length);
+      value && value.trim() !== ""
+        ? value.slice(0, MAX_FIELD_LENGTH)
+        : "_".repeat(length);
 
     let y = height - 130;
     page.drawText(

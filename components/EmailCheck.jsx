@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { isValidEmail } from "@/lib/validation";
 
 export default function EmailCheck({ onEmailVerified }) {
   const [email, setEmail] = useState("");
@@ -10,7 +11,7 @@ export default function EmailCheck({ onEmailVerified }) {
   const handleEmailCheck = async (e) => {
     e.preventDefault();
     
-    if (!email || !email.includes("@")) {
+    if (!email || !isValidEmail(email)) {
       setMessage("Inserisci un'email valida");
       setMessageType("error");
       return;
