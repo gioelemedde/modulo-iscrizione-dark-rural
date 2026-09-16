@@ -94,7 +94,7 @@ const PersonalInfo = ({ nextStep, handleChange, values }) => {
           className="block text-white text-sm font-bold mb-2"
           htmlFor="luogoNascita"
         >
-          Luogo di Nascita
+          Luogo di Nascita *
         </label>
         <input
           type="text"
@@ -113,7 +113,7 @@ const PersonalInfo = ({ nextStep, handleChange, values }) => {
           className="block text-white text-sm font-bold mb-2"
           htmlFor="dataNascita"
         >
-          Data di Nascita
+          Data di Nascita *
         </label>
         <input
           type="date"
@@ -131,7 +131,7 @@ const PersonalInfo = ({ nextStep, handleChange, values }) => {
           className="block text-white text-sm font-bold mb-2"
           htmlFor="comune"
         >
-          Comune di Residenza
+          Comune di Residenza *
         </label>
         <input
           type="text"
@@ -150,7 +150,7 @@ const PersonalInfo = ({ nextStep, handleChange, values }) => {
           className="block text-white text-sm font-bold mb-2"
           htmlFor="indirizzo"
         >
-          Indirizzo
+          Indirizzo *
         </label>
         <input
           type="text"
