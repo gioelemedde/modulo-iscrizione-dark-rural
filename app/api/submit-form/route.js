@@ -87,7 +87,7 @@ async function saveToGoogleSheets(formData, matricola) {
     // Prepara i dati da inserire
     const rowData = {
       Matricola: matricola,
-      "Data Iscrizione": new Date().toLocaleDateString("it-IT"),
+      "Data Iscrizione": new Date().toLocaleDateString("it-IT", { timeZone: "Europe/Rome" }),
       Nome: sanitizeForSheets(formData.nome || ""),
       Cognome: sanitizeForSheets(formData.cognome || ""),
       Genere: formData.genere || "",
@@ -313,11 +313,14 @@ export async function POST(req) {
     const pdfBytes = await pdfDoc.save();
 
     // SALVA I DATI SU GOOGLE SHEETS
+    let sheetsSaved = true;
     try {
       await saveToGoogleSheets(formData, matricola);
     } catch (sheetsError) {
       console.error("Errore nel salvataggio su Google Sheets:", sheetsError);
-      // Continua comunque con l'invio email anche se Google Sheets fallisce
+      // Continua comunque con l'invio email anche se Google Sheets fallisce,
+      // ma lo segnala nella mail all'associazione: la riga va aggiunta a mano.
+      sheetsSaved = false;
     }
 
     const transporter = nodemailer.createTransport({
@@ -331,12 +334,18 @@ export async function POST(req) {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: "darkrural.fest@gmail.com",
-      subject: `Modulo di adesione OBRESCENDI - ${
+      subject: `${
+        sheetsSaved ? "" : "[NON SALVATO SU SHEETS] "
+      }Modulo di adesione OBRESCENDI - ${
         formData.nome || "Nuovo utente"
       } - ${formData.cognome || "Cognome non specificato"} - ${matricola}`,
       text: `Modulo di adesione compilato da ${
         formData.nome || "un nuovo utente"
-      }.`,
+      }.${
+        sheetsSaved
+          ? ""
+          : `\n\nATTENZIONE: il salvataggio su Google Sheets è fallito. Aggiungere a mano la riga nel foglio "Iscritti" (email: ${formData.email}, matricola: ${matricola}), altrimenti la verifica dell'iscrizione non troverà questa persona.`
+      }`,
       attachments: [
         {
           filename: `modulo_adesione_${(formData.nome || "utente").replace(
